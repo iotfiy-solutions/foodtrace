@@ -607,6 +607,7 @@ function initEspOtaSocket(server) {
             broadcastToDashboards({
                 type: "device_disconnected",
                 deviceId,
+                reason: entry?.isOtaInProgress ? "ota_disconnect" : "normal_disconnect",
             });
 
             console.log(`Device disconnected: ${deviceId}`);
