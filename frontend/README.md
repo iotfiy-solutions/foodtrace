@@ -1,6 +1,6 @@
-# FrostKontrol
+# FoodTrace
 
-FrostKontrol is a real-time monitoring web application designed to display the live temperatures and battery alerts of devices. Using WebSockets for live temperature updates, this application allows users to stay informed about the status of their connected devices.
+FoodTrace is a real-time monitoring web application designed to display the live temperatures and battery alerts of devices. Using WebSockets for live temperature updates, this application allows users to stay informed about the status of their connected devices.
 
 ## Features
 - **Real-time Temperature Monitoring**: Displays the live temperature of connected devices with real-time updates using WebSockets.
