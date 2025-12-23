@@ -2,320 +2,6 @@
 // const axios = require("axios");
 // const deviceModel = require("../models/deviceModel");
 
-// const connectedDevices = new Map();   // deviceId -> device info
-// const dashboardClients = new Set();   // admin dashboards
-
-// const HEARTBEAT_INTERVAL = 5000;
-// const HEARTBEAT_TIMEOUT = 15000;
-
-// // ---------------- BROADCAST ----------------
-// function broadcastToDashboards(payload) {
-//     const data = JSON.stringify(payload);
-//     for (const ws of dashboardClients) {
-//         if (ws.readyState === WebSocket.OPEN) ws.send(data);
-//     }
-// }
-
-// // ---------------- SEND OTA UPDATE (UNCHANGED) ----------------
-// async function sendOTAUpdate(ws, deviceId, firmwareUrl) {
-//     try {
-//         console.log(`OTA started for device: ${deviceId}`);
-//         console.log(`Fetching firmware from: ${firmwareUrl}`);
-
-//         const response = await axios.get(firmwareUrl, {
-//             responseType: "arraybuffer",
-//             transformResponse: [(d) => d],
-//             headers: { Accept: "application/octet-stream" }
-//         });
-
-//         const firmwareBuffer = Buffer.from(response.data);
-
-//         if (firmwareBuffer[0] !== 0xE9) {
-//             throw new Error("Invalid ESP32 firmware (missing 0xE9 header)");
-//         }
-
-//         const chunkSize = 512;
-//         let offset = 0;
-
-//         ws.send(JSON.stringify({
-//             type: "ota_start",
-//             size: firmwareBuffer.length,
-//             chunks: Math.ceil(firmwareBuffer.length / chunkSize),
-//         }));
-
-//         const sendChunk = () => {
-//             if (offset >= firmwareBuffer.length) {
-//                 console.log(`OTA transfer complete for ${deviceId}`);
-//                 ws.send(JSON.stringify({ type: "ota_end" }));
-//                 return;
-//             }
-
-//             const chunk = firmwareBuffer.slice(offset, offset + chunkSize);
-
-//             ws.send(JSON.stringify({
-//                 type: "ota_chunk",
-//                 offset,
-//                 data: chunk.toString("base64"),
-//                 totalSize: firmwareBuffer.length,
-//             }));
-
-//             offset += chunkSize;
-//             setTimeout(sendChunk, 20);
-//         };
-
-//         setTimeout(sendChunk, 100);
-
-//     } catch (err) {
-//         console.error(`OTA error for ${deviceId}:`, err.message);
-//         ws.send(JSON.stringify({
-//             type: "ota_error",
-//             message: err.message,
-//         }));
-//     }
-// }
-
-// // ---------------- ESP OTA SOCKET ----------------
-// function initEspOtaSocket(server) {
-//     const wss = new WebSocket.Server({ noServer: true });
-//     console.log("ESP OTA WebSocket initialized");
-
-//     // -------- HEARTBEAT MONITOR --------
-//     setInterval(() => {
-//         const now = Date.now();
-
-//         for (const [deviceId, entry] of connectedDevices.entries()) {
-//             if (!entry.lastHeartbeat) continue;
-
-//             if (
-//                 entry.ws.readyState !== WebSocket.OPEN ||
-//                 now - entry.lastHeartbeat > HEARTBEAT_TIMEOUT
-//             ) {
-//                 console.log(`Heartbeat timeout: ${deviceId}`);
-
-//                 connectedDevices.delete(deviceId);
-
-//                 broadcastToDashboards({
-//                     type: "device_disconnected",
-//                     deviceId,
-//                     reason: "heartbeat_timeout",
-//                 });
-//             }
-//         }
-//     }, HEARTBEAT_INTERVAL);
-
-//     wss.on("connection", (ws, req) => {
-//         const isDashboard = req.url?.includes("admin=true");
-
-//         // -------- DASHBOARD CONNECTION --------
-//         // if (isDashboard) {
-//         //     dashboardClients.add(ws);
-//         //     console.log("📊 Dashboard connected");
-
-//         //     // Send current device list
-//         //     ws.send(JSON.stringify({
-//         //         type: "device_list",
-//         //         devices: Array.from(connectedDevices.entries()).map(([id, d]) => ({
-//         //             deviceId: id,
-//         //             status: d.status,
-//         //             connectedAt: d.connectedAt,
-//         //         }))
-//         //     }));
-
-//         //     ws.on("close", () => dashboardClients.delete(ws));
-//         //     ws.on("error", () => dashboardClients.delete(ws));
-//         //     return;
-//         // }
-
-//         if (isDashboard) {
-//             dashboardClients.add(ws);
-//             console.log("📊 Dashboard connected");
-
-//             const deviceList = Array.from(connectedDevices.entries()).map(
-//                 ([id, d]) => ({
-//                     deviceId: id,
-//                     status: d.status,
-//                     connectedAt: d.connectedAt,
-//                     lastHeartbeat: d.lastHeartbeat
-//                 })
-//             );
-
-//             // 🔹 Console log device list
-//             console.log("📋 Sending device list to dashboard:");
-//             console.table(deviceList);
-
-//             // Send current device list
-//             ws.send(JSON.stringify({
-//                 type: "device_list",
-//                 devices: deviceList
-//             }));
-
-//             ws.on("close", () => dashboardClients.delete(ws));
-//             ws.on("error", () => dashboardClients.delete(ws));
-//             return;
-//         }
-
-
-//         // -------- DEVICE CONNECTION --------
-//         let deviceId = null;
-//         console.log("🔌 New OTA WebSocket connection");
-
-//         ws.on("message", async (message) => {
-//             try {
-//                 const data = JSON.parse(message.toString());
-
-//                 // -------- REGISTER --------
-//                 if (data.type === "register") {
-//                     deviceId = data.deviceId;
-
-//                     connectedDevices.set(deviceId, {
-//                         ws,
-//                         connectedAt: new Date(),
-//                         status: "connected",
-//                         lastHeartbeat: Date.now(),
-//                     });
-
-//                     console.log(`Device registered: ${deviceId}`);
-
-//                     broadcastToDashboards({
-//                         type: "device_connected",
-//                         deviceId,
-//                         time: new Date(),
-//                     });
-
-//                     ws.send(JSON.stringify({ type: "registered", status: "success" }));
-//                 }
-
-//                 // -------- HEARTBEAT --------
-//                 else if (data.type === "heartbeat") {
-//                     const entry = connectedDevices.get(deviceId);
-//                     if (entry) entry.lastHeartbeat = Date.now();
-
-//                     ws.send(JSON.stringify({ type: "heartbeat_ack" }));
-//                 }
-
-//                 // -------- OTA REQUEST --------
-//                 // else if (data.type === "ota_request") {
-//                 //     if (data.firmwareUrl) {
-//                 //         await sendOTAUpdate(ws, deviceId, data.firmwareUrl);
-//                 //     }
-//                 // }
-//                 else if (data.type === "ota_request") {
-//                     if (data.firmwareUrl) {
-//                         const entry = connectedDevices.get(deviceId);
-
-//                         if (entry && data.versionId) {
-//                             entry.currentVersionId = data.versionId;
-//                         }
-
-//                         await sendOTAUpdate(ws, deviceId, data.firmwareUrl);
-//                     }
-//                 }
-
-
-//                 // -------- OTA PROGRESS --------
-//                 else if (data.type === "ota_progress") {
-//                     console.log(`OTA progress ${deviceId}: ${data.progress}%`);
-//                     broadcastToDashboards({
-//                         type: "ota_progress",
-//                         deviceId,
-//                         progress: data.progress,
-//                     });
-//                 }
-
-//                 // -------- OTA COMPLETE --------
-//                 // else if (data.type === "ota_complete") {
-//                 //     broadcastToDashboards({
-//                 //         type: "ota_result",
-//                 //         deviceId,
-//                 //         status: "success",
-//                 //     });
-//                 // }
-//                 else if (data.type === "ota_complete") {
-//                     console.log(`OTA completed successfully for ${deviceId}`);
-
-//                     const entry = connectedDevices.get(deviceId);
-
-//                     if (entry?.currentVersionId) {
-//                         try {
-//                             await deviceModel.findOneAndUpdate(
-//                                 { deviceId },
-//                                 { versionId: entry.currentVersionId },
-//                                 { new: true }
-//                             );
-
-//                             console.log(
-//                                 `Updated versionId for ${deviceId} → ${entry.currentVersionId}`
-//                             );
-//                         } catch (err) {
-//                             console.error("DB update error:", err);
-//                         }
-//                     }
-
-//                     // cleanup
-//                     if (entry) entry.currentVersionId = null;
-
-//                     broadcastToDashboards({
-//                         type: "ota_result",
-//                         deviceId,
-//                         status: "success",
-//                     });
-//                 }
-
-
-//                 // -------- OTA ERROR --------
-//                 else if (data.type === "ota_error") {
-//                     console.error(`OTA failed for ${deviceId}: ${data.message}`);
-
-//                     const entry = connectedDevices.get(deviceId);
-//                     if (entry) entry.currentVersionId = null;
-
-//                     broadcastToDashboards({
-//                         type: "ota_result",
-//                         deviceId,
-//                         status: "fail",
-//                         message: data.message,
-//                     });
-//                 }
-
-//             } catch (err) {
-//                 console.error("OTA WebSocket message error:", err);
-//             }
-//         });
-
-//         ws.on("close", () => {
-//             if (!deviceId) return;
-
-//             connectedDevices.delete(deviceId);
-
-//             broadcastToDashboards({
-//                 type: "device_disconnected",
-//                 deviceId,
-//             });
-
-//             console.log(`Device disconnected: ${deviceId}`);
-//         });
-
-//         ws.on("error", (err) => {
-//             console.error("OTA WebSocket error:", err);
-//         });
-//     });
-
-//     return wss;
-// }
-
-// module.exports = {
-//     connectedDevices,
-//     dashboardClients,
-//     broadcastToDashboards,
-//     sendOTAUpdate,
-//     initEspOtaSocket,
-// };
-
-
-// const WebSocket = require("ws");
-// const axios = require("axios");
-// const deviceModel = require("../models/deviceModel");
-
 // const connectedDevices = new Map();
 // const dashboardClients = new Set();
 
@@ -330,13 +16,12 @@
 //     }
 // }
 
-// // ---------------- SEND OTA UPDATE (UNCHANGED) ----------------
+// // ---------------- SEND OTA UPDATE ----------------
 // async function sendOTAUpdate(ws, deviceId, firmwareUrl) {
 //     try {
 //         console.log(`OTA started for device: ${deviceId}`);
-
 //         const entry = connectedDevices.get(deviceId);
-//         if (entry) entry.isOtaInProgress = true; //  mark OTA in progress
+//         if (entry) entry.isOtaInProgress = true;
 
 //         const response = await axios.get(firmwareUrl, {
 //             responseType: "arraybuffer",
@@ -349,7 +34,7 @@
 //             throw new Error("Invalid ESP32 firmware");
 //         }
 
-//         const chunkSize = 4096; // your chunk size
+//         const chunkSize = 4096;
 //         let offset = 0;
 
 //         ws.send(JSON.stringify({
@@ -359,37 +44,33 @@
 //             chunks: Math.ceil(firmwareBuffer.length / chunkSize),
 //         }));
 
-//         ws.otaState = {
-//             firmwareBuffer,
-//             offset,
-//             chunkSize,
-//             deviceId
-//         };
-
+//         ws.otaState = { firmwareBuffer, offset, chunkSize, deviceId };
 //         sendNextChunk(ws);
 
 //     } catch (err) {
 //         const entry = connectedDevices.get(deviceId);
-//         if (entry) entry.isOtaInProgress = false; // clear on error
+//         if (entry) entry.isOtaInProgress = false;
 
-//         ws.send(JSON.stringify({
-//             type: "ota_error",
-//             message: err.message,
-//         }));
+//         broadcastToDashboards({
+//             type: "ota_result",
+//             deviceId,
+//             status: "fail",
+//             message: err.message
+//         });
+
+//         ws.send(JSON.stringify({ type: "ota_error", message: err.message }));
 //     }
 // }
 
-
 // function sendNextChunk(ws) {
 //     if (ws.readyState !== WebSocket.OPEN) return;
-
 //     const state = ws.otaState;
 //     if (!state) return;
 
 //     const { firmwareBuffer, offset, chunkSize, deviceId } = state;
 
 //     if (offset >= firmwareBuffer.length) {
-//         console.log(`All chunks sent to ${deviceId}, waiting for ota_complete`);
+//         console.log(`All chunks sent to ${deviceId}, sending ota_end`);
 //         ws.send(JSON.stringify({ type: "ota_end" }));
 //         return;
 //     }
@@ -403,26 +84,33 @@
 //     }));
 // }
 
-
-
 // // ---------------- ESP OTA SOCKET ----------------
 // function initEspOtaSocket(server) {
 //     const wss = new WebSocket.Server({ noServer: true });
 //     console.log("ESP OTA WebSocket initialized");
 
-//     // -------- HEARTBEAT MONITOR --------
+//     // Heartbeat monitor
 //     setInterval(() => {
 //         const now = Date.now();
 
 //         for (const [deviceId, entry] of connectedDevices.entries()) {
 //             if (!entry.lastHeartbeat) continue;
 
-//             // skip heartbeat timeout if OTA in progress
 //             if (
 //                 entry.ws.readyState !== WebSocket.OPEN ||
 //                 (!entry.isOtaInProgress && now - entry.lastHeartbeat > HEARTBEAT_TIMEOUT)
 //             ) {
 //                 console.log(`Heartbeat timeout: ${deviceId}`);
+
+//                 // Mark OTA failed if in progress
+//                 if (entry.isOtaInProgress) {
+//                     broadcastToDashboards({
+//                         type: "ota_result",
+//                         deviceId,
+//                         status: "fail",
+//                         message: "Device disconnected during OTA"
+//                     });
+//                 }
 
 //                 connectedDevices.delete(deviceId);
 
@@ -435,41 +123,32 @@
 //         }
 //     }, HEARTBEAT_INTERVAL);
 
-
 //     wss.on("connection", (ws, req) => {
 //         const isDashboard = req.url?.includes("admin=true");
 
-//         // -------- DASHBOARD CONNECTION --------
+//         // DASHBOARD CONNECTION
 //         if (isDashboard) {
 //             dashboardClients.add(ws);
 //             console.log("Dashboard connected");
 
-//             const deviceList = Array.from(connectedDevices.entries()).map(
-//                 ([id, d]) => ({
-//                     deviceId: id,
-//                     status: d.status,
-//                     connectedAt: d.connectedAt,
-//                     lastHeartbeat: d.lastHeartbeat
-//                 })
-//             );
+//             const deviceList = Array.from(connectedDevices.entries()).map(([id, d]) => ({
+//                 deviceId: id,
+//                 status: d.status,
+//                 connectedAt: d.connectedAt,
+//                 lastHeartbeat: d.lastHeartbeat
+//             }));
 
-//             // Console log device list
 //             console.log("Sending device list to dashboard:");
 //             console.table(deviceList);
 
-//             // Send current device list
-//             ws.send(JSON.stringify({
-//                 type: "device_list",
-//                 devices: deviceList
-//             }));
+//             ws.send(JSON.stringify({ type: "device_list", devices: deviceList }));
 
 //             ws.on("close", () => dashboardClients.delete(ws));
 //             ws.on("error", () => dashboardClients.delete(ws));
 //             return;
 //         }
 
-
-//         // -------- DEVICE CONNECTION --------
+//         // DEVICE CONNECTION
 //         let deviceId = null;
 //         console.log("🔌 New OTA WebSocket connection");
 
@@ -477,117 +156,105 @@
 //             try {
 //                 const data = JSON.parse(message.toString());
 
-//                 // -------- REGISTER --------
-//                 if (data.type === "register") {
-//                     deviceId = data.deviceId;
+//                 switch (data.type) {
+//                     case "register":
+//                         deviceId = data.deviceId;
+//                         connectedDevices.set(deviceId, {
+//                             ws,
+//                             connectedAt: new Date(),
+//                             status: "connected",
+//                             lastHeartbeat: Date.now(),
+//                         });
 
-//                     connectedDevices.set(deviceId, {
-//                         ws,
-//                         connectedAt: new Date(),
-//                         status: "connected",
-//                         lastHeartbeat: Date.now(),
-//                     });
+//                         console.log(`Device registered: ${deviceId}`);
 
-//                     console.log(`Device registered: ${deviceId}`);
+//                         broadcastToDashboards({
+//                             type: "device_connected",
+//                             deviceId,
+//                             time: new Date(),
+//                         });
 
-//                     broadcastToDashboards({
-//                         type: "device_connected",
-//                         deviceId,
-//                         time: new Date(),
-//                     });
+//                         ws.send(JSON.stringify({ type: "registered", status: "success" }));
+//                         break;
 
-//                     ws.send(JSON.stringify({ type: "registered", status: "success" }));
-//                 }
+//                     case "ota_chunk_ack":
+//                         if (ws.otaState) {
+//                             ws.otaState.offset += ws.otaState.chunkSize;
+//                             sendNextChunk(ws);
+//                         }
+//                         break;
 
-//                 else if (data.type === "ota_chunk_ack") {
-//                     const state = ws.otaState;
-//                     if (!state) return;
+//                     case "heartbeat":
+//                         if (deviceId && connectedDevices.has(deviceId)) {
+//                             connectedDevices.get(deviceId).lastHeartbeat = Date.now();
+//                         }
+//                         ws.send(JSON.stringify({ type: "heartbeat_ack" }));
+//                         break;
 
-//                     state.offset += state.chunkSize;
+//                     case "ota_request":
+//                         if (data.firmwareUrl) {
+//                             const entry = connectedDevices.get(deviceId);
+//                             if (entry && data.versionId) entry.currentVersionId = data.versionId;
+//                             await sendOTAUpdate(ws, deviceId, data.firmwareUrl);
+//                         }
+//                         break;
 
-//                     sendNextChunk(ws);
-//                 }
+//                     case "ota_progress":
+//                         broadcastToDashboards({
+//                             type: "ota_progress",
+//                             deviceId,
+//                             progress: data.progress,
+//                         });
+//                         console.log(`OTA progress ${deviceId}: ${data.progress}%`);
+//                         break;
 
-
-//                 // -------- HEARTBEAT --------
-//                 else if (data.type === "heartbeat") {
-//                     const entry = connectedDevices.get(deviceId);
-//                     if (entry) entry.lastHeartbeat = Date.now();
-
-//                     ws.send(JSON.stringify({ type: "heartbeat_ack" }));
-//                 }
-
-//                 // -------- OTA REQUEST --------
-//                 else if (data.type === "ota_request") {
-//                     if (data.firmwareUrl) {
+//                     case "ota_complete":
 //                         const entry = connectedDevices.get(deviceId);
-
-//                         if (entry && data.versionId) {
-//                             entry.currentVersionId = data.versionId;
+//                         if (entry?.currentVersionId) {
+//                             try {
+//                                 await deviceModel.findOneAndUpdate(
+//                                     { deviceId },
+//                                     { versionId: entry.currentVersionId },
+//                                     { new: true }
+//                                 );
+//                                 console.log(`Updated versionId for ${deviceId} → ${entry.currentVersionId}`);
+//                             } catch (err) {
+//                                 console.error("DB update error:", err);
+//                             }
 //                         }
 
-//                         await sendOTAUpdate(ws, deviceId, data.firmwareUrl);
-//                     }
-//                 }
-
-
-//                 // -------- OTA PROGRESS --------
-//                 else if (data.type === "ota_progress") {
-//                     console.log(`OTA progress ${deviceId}: ${data.progress}%`);
-//                     broadcastToDashboards({
-//                         type: "ota_progress",
-//                         deviceId,
-//                         progress: data.progress,
-//                     });
-//                 }
-
-//                 // OTA COMPLETE
-//                 else if (data.type === "ota_complete") {
-//                     console.log(`OTA completed successfully for ${deviceId}`);
-
-//                     const entry = connectedDevices.get(deviceId);
-
-//                     if (entry?.currentVersionId) {
-//                         try {
-//                             await deviceModel.findOneAndUpdate(
-//                                 { deviceId },
-//                                 { versionId: entry.currentVersionId },
-//                                 { new: true }
-//                             );
-//                             console.log(`Updated versionId for ${deviceId} → ${entry.currentVersionId}`);
-//                         } catch (err) {
-//                             console.error("DB update error:", err);
+//                         if (entry) {
+//                             entry.isOtaInProgress = false;
+//                             entry.currentVersionId = null;
 //                         }
-//                     }
 
-//                     //  mark OTA finished
-//                     if (entry) entry.isOtaInProgress = false;
-//                     if (entry) entry.currentVersionId = null;
+//                         broadcastToDashboards({
+//                             type: "ota_result",
+//                             deviceId,
+//                             status: "success",
+//                         });
 
-//                     broadcastToDashboards({
-//                         type: "ota_result",
-//                         deviceId,
-//                         status: "success",
-//                     });
+//                         console.log(`OTA completed successfully for ${deviceId}`);
+//                         break;
+
+//                     case "ota_error":
+//                         const errEntry = connectedDevices.get(deviceId);
+//                         if (errEntry) {
+//                             errEntry.isOtaInProgress = false;
+//                             errEntry.currentVersionId = null;
+//                         }
+//                         broadcastToDashboards({
+//                             type: "ota_result",
+//                             deviceId,
+//                             status: "fail",
+//                             message: data.message,
+//                         });
+//                         console.error(`OTA failed for ${deviceId}: ${data.message}`);
+//                         break;
+
+//                     default:
+//                         break;
 //                 }
-
-//                 // OTA ERROR
-//                 else if (data.type === "ota_error") {
-//                     console.error(`OTA failed for ${deviceId}: ${data.message}`);
-
-//                     const entry = connectedDevices.get(deviceId);
-//                     if (entry) entry.isOtaInProgress = false; // clear OTA flag
-//                     if (entry) entry.currentVersionId = null;
-
-//                     broadcastToDashboards({
-//                         type: "ota_result",
-//                         deviceId,
-//                         status: "fail",
-//                         message: data.message,
-//                     });
-//                 }
-
-
 //             } catch (err) {
 //                 console.error("OTA WebSocket message error:", err);
 //             }
@@ -595,6 +262,16 @@
 
 //         ws.on("close", () => {
 //             if (!deviceId) return;
+
+//             const entry = connectedDevices.get(deviceId);
+//             if (entry?.isOtaInProgress) {
+//                 broadcastToDashboards({
+//                     type: "ota_result",
+//                     deviceId,
+//                     status: "fail",
+//                     message: "Device disconnected during OTA",
+//                 });
+//             }
 
 //             connectedDevices.delete(deviceId);
 
@@ -621,6 +298,7 @@
 //     sendOTAUpdate,
 //     initEspOtaSocket,
 // };
+
 
 const WebSocket = require("ws");
 const axios = require("axios");
@@ -643,6 +321,23 @@ function broadcastToDashboards(payload) {
 // ---------------- SEND OTA UPDATE ----------------
 async function sendOTAUpdate(ws, deviceId, firmwareUrl) {
     try {
+        // Check if device exists in MongoDB
+        const dbDevice = await deviceModel.findOne({ deviceId });
+        if (!dbDevice) {
+            console.log(`Device ${deviceId} not found in DB. Skipping OTA.`);
+            ws.send(JSON.stringify({
+                type: "ota_error",
+                message: "Device not registered in database, OTA skipped."
+            }));
+            broadcastToDashboards({
+                type: "ota_result",
+                deviceId,
+                status: "fail",
+                message: "Device not registered in DB, OTA skipped."
+            });
+            return;
+        }
+
         console.log(`OTA started for device: ${deviceId}`);
         const entry = connectedDevices.get(deviceId);
         if (entry) entry.isOtaInProgress = true;
@@ -726,7 +421,6 @@ function initEspOtaSocket(server) {
             ) {
                 console.log(`Heartbeat timeout: ${deviceId}`);
 
-                // Mark OTA failed if in progress
                 if (entry.isOtaInProgress) {
                     broadcastToDashboards({
                         type: "ota_result",
@@ -750,7 +444,6 @@ function initEspOtaSocket(server) {
     wss.on("connection", (ws, req) => {
         const isDashboard = req.url?.includes("admin=true");
 
-        // DASHBOARD CONNECTION
         if (isDashboard) {
             dashboardClients.add(ws);
             console.log("Dashboard connected");
@@ -772,7 +465,6 @@ function initEspOtaSocket(server) {
             return;
         }
 
-        // DEVICE CONNECTION
         let deviceId = null;
         console.log("🔌 New OTA WebSocket connection");
 
@@ -783,6 +475,19 @@ function initEspOtaSocket(server) {
                 switch (data.type) {
                     case "register":
                         deviceId = data.deviceId;
+
+                        // Only add device if it exists in DB
+                        const dbDevice = await deviceModel.findOne({ deviceId });
+                        if (!dbDevice) {
+                            console.log(`Device ${deviceId} not in DB, ignoring registration.`);
+                            ws.send(JSON.stringify({
+                                type: "registered",
+                                status: "fail",
+                                message: "Device not registered in DB"
+                            }));
+                            return;
+                        }
+
                         connectedDevices.set(deviceId, {
                             ws,
                             connectedAt: new Date(),
