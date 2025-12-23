@@ -1484,7 +1484,7 @@ const removeDeviceOnly = useCallback((deviceId) => {
       </div>
 
       <div className="flex-1 min-h-0 px-4 overflow-hidden">
-        <div className="brand-table-scroll overflow-y-auto pr-1 h-full min-h-[200px] md:min-h-[250px]">
+        <div className="brand-table-scroll overflow-y-auto pr-1 min-h-[500px] md:min-h-[250px]">
           {loading ? (
             <div className="text-center py-4">Loading devices...</div>
           ) : devices.length === 0 ? (
@@ -1536,7 +1536,7 @@ const removeDeviceOnly = useCallback((deviceId) => {
       </div>
 
       <div className="flex-shrink-0 grid grid-cols-2 gap-3 px-1.5 pb-1.5 md:px-4 md:pb-4">
-        <div className="bg-gray-200 rounded-lg p-2.5 md:p-4 ">
+        <div className="bg-gray-200 rounded-lg p-2.5 md:p-4  ">
           <p className="text-gray-700 text-sm mb-1 ">No. of Device:</p>
           <p className="text-gray-800 font-bold text-xl  ">{devices.length < 10 ? `0${devices.length}` : devices.length}</p>
         </div>
@@ -1591,7 +1591,7 @@ const removeDeviceOnly = useCallback((deviceId) => {
           onClose={() => setDrawerOpen(false)}
           PaperProps={{ style: { width: "100%" } }}
         >
-          <div className="p-4">
+          <div className="p-4 h-full">
             {renderOTAMarkup()}
           </div>
         </Drawer>
