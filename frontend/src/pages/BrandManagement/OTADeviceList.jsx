@@ -1591,7 +1591,7 @@ const removeDeviceOnly = useCallback((deviceId) => {
           onClose={() => setDrawerOpen(false)}
           PaperProps={{ style: { width: "100%" } }}
         >
-          <div className="p-4 h-full">
+          <div className="p-4 h-full md:h-auto">
             {renderOTAMarkup()}
           </div>
         </Drawer>
