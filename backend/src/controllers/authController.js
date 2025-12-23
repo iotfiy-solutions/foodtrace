@@ -152,17 +152,17 @@ const createUser = async (req, res) => {
 
         /* ---------------- SEND SETUP EMAIL ---------------- */
         // const setupLink = `http://localhost:5173/setup-password/${token}`;
-        const setupLink = `https://luckyone-iotfiysolutions.vercel.app/setup-password/${token}`;
+        const setupLink = `https://foodtrace.se/setup-password/${token}`;
 
         await sendEmail(
             newUser.email,
-            "Set up your Odour Management System account",
+            "Set up your Food Trace Account",
             `
             <div style="font-family: Arial, sans-serif; color: #333; background: #f5f8fa; padding: 20px; border-radius: 8px;">
                 <div style="text-align: center;">
                     <img src="cid:logo.png" alt="IOTFIY Logo" style="width: 120px; margin-bottom: 20px;" />
                 </div>
-                <h2 style="color: #0055a5;">Welcome to Odour Management System!</h2>
+                <h2 style="color: #0055a5;">Welcome to Food Trace!</h2>
                 <p>Hello <b>${newUser.name || newUser.email}</b>,</p>
                 <p>Your account has been created. Please click below to set your password:</p>
 
@@ -236,18 +236,18 @@ const setPassword = async (req, res) => {
         await user.save();
 
 
-        const setupLink = `https://luckyone-iotfiysolutions.vercel.app/verify-otp/${token}`;
+        const setupLink = `https://foodtrace.se/verify-otp/${token}`;
 
         await sendEmail(
             user.email,
-            "Verify Your Odour Management System account",
+            "Verify Your Food Trace Account",
             `
   <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 600px; margin: auto; border: 1px solid #e6e6e6; border-radius: 8px; background-color: #ffffff;">
       <div style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #e6e6e6;">
           <img src="cid:logo.png" alt="IOTFIY Logo" style="max-width: 150px;" />
       </div>
 
-      <h2 style="color: #263238; margin-top: 30px;">Welcome to Odour Management System!</h2>
+      <h2 style="color: #263238; margin-top: 30px;">Welcome to Food Trace!</h2>
       <p style="font-size: 14px; line-height: 1.6;">
           Hi <strong>${user.name || user.email}</strong>,
           <br><br>
@@ -399,12 +399,12 @@ const forgotPassword = async (req, res) => {
 
         // Create reset link
         // const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
-        const resetLink = `https://luckyone-iotfiysolutions.vercel.app/reset-password/${resetToken}`;
+        const resetLink = `https://foodtrace.se/reset-password/${resetToken}`;
 
         // Send email
         await sendEmail(
             user.email,
-            "Reset Your Odour Management System account Password",
+            "Reset Your Food Trace Account Password",
             `
             <div style="font-family: Arial, sans-serif; color: #333; padding: 20px;">
                 <h2>Password Reset Request</h2>

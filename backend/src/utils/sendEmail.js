@@ -42,19 +42,19 @@ const path = require("path");
 
 // Create transporter using your SMTP credentials
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST, // e.g., smtp.yourdomain.com or Hostinger SMTP
-    port: process.env.SMTP_PORT || 465, // 465 for SSL, 587 for TLS
-    secure: true, // true for 465, false for 587
+    host: process.env.SMTP_HOST, 
+    port: process.env.SMTP_PORT || 465, 
+    secure: true,
     auth: {
-        user: process.env.SMTP_USER, // your email address
-        pass: process.env.SMTP_PASS  // your email password
+        user: process.env.SMTP_USER, 
+        pass: process.env.SMTP_PASS  
     }
 });
 
 const sendEmail = async (to, subject, html) => {
     try {
         await transporter.sendMail({
-            from: `LuckyOneMall <${process.env.SMTP_USER}>`,
+            from: `FoodTrace <${process.env.SMTP_USER}>`,
             to,
             subject,
             html,
