@@ -390,6 +390,7 @@ function sendNextChunk(ws) {
 
     if (offset >= firmwareBuffer.length) {
         console.log(`All chunks sent to ${deviceId}, waiting for ota_complete`);
+        ws.send(JSON.stringify({ type: "ota_end" }));
         return;
     }
 
