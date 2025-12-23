@@ -349,7 +349,7 @@ async function sendOTAUpdate(ws, deviceId, firmwareUrl) {
             throw new Error("Invalid ESP32 firmware");
         }
 
-        const chunkSize = 2048; // your chunk size
+        const chunkSize = 4096; // your chunk size
         let offset = 0;
 
         ws.send(JSON.stringify({
