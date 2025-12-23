@@ -1484,7 +1484,7 @@ const removeDeviceOnly = useCallback((deviceId) => {
       </div>
 
       <div className="flex-1 min-h-0 px-4 overflow-hidden">
-        <div className="brand-table-scroll overflow-y-auto pr-1 min-h-[500px] md:min-h-[250px]">
+        <div className="brand-table-scroll overflow-y-auto pr-1">
           {loading ? (
             <div className="text-center py-4">Loading devices...</div>
           ) : devices.length === 0 ? (
