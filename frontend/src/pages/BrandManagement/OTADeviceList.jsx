@@ -830,13 +830,9 @@ const toast = (title, icon = "success", timer = 2500) =>
   Swal.fire({ toast: true, position: "top-end", showConfirmButton: false, timer, title, icon });
 
 
-
-
-
 const OTADeviceList = ({ selectedVersion, onVersionSelect }) => {
   const { token: ctxToken } = useStore?.() || {};
   const token = ctxToken || localStorage.getItem("token") || "";
-
   const [devices, setDevices] = useState([]); // { deviceId, ip, status, connectedAt, otaStatus, progress }
   const [loading, setLoading] = useState(true);
   const [selectedDevices, setSelectedDevices] = useState(new Set());
@@ -920,7 +916,9 @@ const removeDeviceOnly = useCallback((deviceId) => {
         } else if (prevState === WebSocket.CONNECTING) {
           try {
             wsRef.current.onopen = wsRef.current.onmessage = wsRef.current.onerror = wsRef.current.onclose = null;
-          } catch (err) {}
+          } catch (err) {
+            console.log("Error getting in connectWs>", err);
+          }
           const shortRetry = setTimeout(() => {
             if (!unmountedRef.current && (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN)) {
               connectWs();
@@ -972,6 +970,7 @@ const removeDeviceOnly = useCallback((deviceId) => {
         const raw = typeof evt.data === "string" ? evt.data : evt.data.toString?.() || evt.data;
         const msg = JSON.parse(raw);
 
+        console.log("connectWs>msg", msg);
         // handle application-level ping/pong if present
         if (msg && msg.type === "ping") {
           try {
@@ -1485,11 +1484,11 @@ const removeDeviceOnly = useCallback((deviceId) => {
       </div>
 
       <div className="flex-1 min-h-0 px-4 overflow-hidden">
-        <div className="brand-table-scroll overflow-y-auto pr-1 h-full">
+        <div className="brand-table-scroll overflow-y-auto pr-1 h-full min-h-[200px] md:min-h-[250px]">
           {loading ? (
             <div className="text-center py-4">Loading devices...</div>
           ) : devices.length === 0 ? (
-            <div className="text-center text-sm md:text-md  py-4">No devices connected.</div>
+            <div className="flex items-center justify-center h-full text-sm md:text-md py-4">No devices connected.</div>
           ) : (
             <div className="space-y-2 pb-2">
               {/* optional header row with selectAll */}
@@ -1537,17 +1536,17 @@ const removeDeviceOnly = useCallback((deviceId) => {
       </div>
 
       <div className="flex-shrink-0 grid grid-cols-2 gap-3 px-1.5 pb-1.5 md:px-4 md:pb-4">
-        <div className="bg-gray-200 rounded-lg p-1 md:p-4">
-          <p className="text-gray-700 text-sm mb-1 ">No. of Device :</p>
+        <div className="bg-gray-200 rounded-lg p-2.5 md:p-4 ">
+          <p className="text-gray-700 text-sm mb-1 ">No. of Device:</p>
           <p className="text-gray-800 font-bold text-xl  ">{devices.length < 10 ? `0${devices.length}` : devices.length}</p>
         </div>
 
-        <div className="bg-green-500 rounded-lg p-1 md:p-4 text-white">
+        <div className="bg-green-500 rounded-lg p-2.5 md:p-4 text-white ">
           <p className="font-normal md:font-semibold mb-1 ">PASS</p>
           <p className=" text-md sm:text-xl md:text-2xl  xs:font-semibold sm:font-bold ">{passCountMemo < 10 ? `0${passCountMemo}` : passCountMemo}</p>
         </div>
 
-        <div className="bg-orange-400 rounded-lg p-1 md:p-4 text-white">
+        <div className="bg-orange-400 rounded-lg p-2.5 md:p-4 text-white ">
           <p className="font-normal md:font-semibold mb-1 ">Fail</p>
           <p className=" text-md sm:text-xl md:text-2xl  xs:font-semibold sm:font-bold ">{failCountMemo < 10 ? `0${failCountMemo}` : failCountMemo}</p>
         </div>
