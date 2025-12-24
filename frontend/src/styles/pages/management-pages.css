@@ -1520,7 +1520,7 @@
   .brand-list-header { font-size: 0.875rem; }
   .brand-table-header { font-size: 0.875rem; padding: 0.75rem 1rem; }
   .brand-table-cell { font-size: 0.875rem; padding: 0.75rem 1rem; }
-  .brand-table-scroll { max-height: 24rem; }
+  /* .brand-table-scroll { max-height: 24rem; } */
   .brand-add-title { font-size: 1.125rem; }
   .brand-add-subtitle { font-size: 0.8125rem; }
   .brand-action-btn { width: 1.75rem; height: 1.75rem; }
@@ -1534,7 +1534,7 @@
   .brand-list-header { font-size: 1rem; }
   .brand-table-header { font-size: 0.9375rem; padding: 0.875rem 1.25rem; }
   .brand-table-cell { font-size: 0.9375rem; padding: 0.875rem 1.25rem; }
-  .brand-table-scroll { max-height: 28rem; }
+  /* .brand-table-scroll { max-height: 28rem; } */
   .brand-add-title { font-size: 1.25rem; }
   .brand-add-subtitle { font-size: 0.875rem; }
   .brand-action-btn { width: 2rem; height: 2rem; }
@@ -1548,7 +1548,7 @@
   .brand-list-header { font-size: 1.125rem; }
   .brand-table-header { font-size: 1rem; padding: 1rem 1.5rem; }
   .brand-table-cell { font-size: 1rem; padding: 1rem 1.5rem; }
-  .brand-table-scroll { max-height: 32rem; }
+  /* .brand-table-scroll { max-height: 32rem; } */
   .brand-add-title { font-size: 1.375rem; }
   .brand-add-subtitle { font-size: 0.9375rem; }
   .brand-action-btn { width: 2.25rem; height: 2.25rem; }
@@ -1562,7 +1562,7 @@
   .brand-list-header { font-size: 1.25rem; }
   .brand-table-header { font-size: 1.125rem; padding: 1.125rem 1.75rem; }
   .brand-table-cell { font-size: 1.125rem; padding: 1.125rem 1.75rem; }
-  .brand-table-scroll { max-height: 36rem; }
+  /* .brand-table-scroll { max-height: 36rem; } */
   .brand-add-title { font-size: 1.5rem; }
   .brand-add-subtitle { font-size: 1rem; }
   .brand-action-btn { width: 2.5rem; height: 2.5rem; }
@@ -1576,7 +1576,7 @@
   .brand-list-header { font-size: 1.375rem; }
   .brand-table-header { font-size: 1.25rem; padding: 1.25rem 2rem; }
   .brand-table-cell { font-size: 1.25rem; padding: 1.25rem 2rem; }
-  .brand-table-scroll { max-height: 40rem; }
+  /* .brand-table-scroll { max-height: 40rem; } */
   .brand-add-title { font-size: 1.75rem; }
   .brand-add-subtitle { font-size: 1.125rem; }
   .brand-action-btn { width: 2.75rem; height: 2.75rem; }
@@ -1590,7 +1590,7 @@
   .brand-list-header { font-size: 1.5rem; }
   .brand-table-header { font-size: 1.375rem; padding: 1.5rem 2.5rem; }
   .brand-table-cell { font-size: 1.375rem; padding: 1.5rem 2.5rem; }
-  .brand-table-scroll { max-height: 44rem; }
+  /* .brand-table-scroll { max-height: 44rem; } */
   .brand-add-title { font-size: 2rem; }
   .brand-add-subtitle { font-size: 1.25rem; }
   .brand-action-btn { width: 3rem; height: 3rem; }

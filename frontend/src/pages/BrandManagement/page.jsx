@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import OTADeviceList from './OTADeviceList'
 import OTAFileUpload from './OTAFileUpload'
-
 import "../../styles/pages/management-pages.css"
 
 const OTAManagement = () => {
@@ -42,3 +41,7 @@ const OTAManagement = () => {
 }
 
 export default OTAManagement
+
+
+
+

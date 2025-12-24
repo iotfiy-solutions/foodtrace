@@ -1832,9 +1832,9 @@ const SidebarRebuilt = () => {
     <>
       {/* Desktop sidebar (unchanged behavior) */}
       {!isMobile && (
-        <div className="sidebar">
+        <div className="sidebar ">
           <div className="sidebar-top">
-            <img src="/logo-half.png" alt="logo" width={48} height={48} />
+            <img src="/logo-half.png" alt="logo" className="w-[55px] h-[auto]"/>
           </div>
 
           {(user?.role !== "admin") ? (
