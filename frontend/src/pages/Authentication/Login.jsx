@@ -96,11 +96,12 @@ const handleLogin = async (email, password) => {
   
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-0"> {/* Added padding for small screens, removed for larger */}
-      <div className="grid md:grid-cols-2 rounded-4xl items-stretch max-w-7xl w-full bg-white shadow-lg overflow-hidden"> {/* Combined background, shadow, and rounded corners for the whole container to remove gaps */}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 sm:p-2"> {/* Added padding for small screens, removed for larger */}
+      {/* <div className="grid md:grid-cols-2 rounded-4xl items-stretch max-w-7xl w-full bg-white shadow-lg overflow-hidden"> Combined background, shadow, and rounded corners for the whole container to remove gaps */}
+        <div className="grid md:grid-cols-2 rounded-4xl items-stretch max-w-7xl w-full  bg-white shadow-lg overflow-hidden">
         {/* Left (Form) Section */}
-        <div className="p-8 w-full"> {/* No need for max-w-md or mx-auto here, grid handles width */}
-          <form className="space-y-6 lg:p-24 p-0" onSubmit={(e) => e.preventDefault()}>
+        <div className="p-6 w-full"> {/* No need for max-w-md or mx-auto here, grid handles width */}
+          <form className="space-y-6 sm:p-10 xl:p-20 p-0" onSubmit={(e) => e.preventDefault()}>
             <div className="mb-8 text-center md:text-left">
               <img src={'/logo.png'} alt="IoTify Logo" className="h-10 mx-auto md:mx-0 mb-4" />
               <h3 className="text-slate-900 text-2xl font-semibold">Log in to your Account</h3>
@@ -204,21 +205,14 @@ const handleLogin = async (email, password) => {
         </div>
 
         {/* Right (Images) Section */}
-        <div style={{backgroundColor:'#EAEAEA'}} className=" h-full hidden md:flex flex-col items-center justify-between p-4"> {/* Changed to flex-col and justify-between for image placement */}
-          {/* Top Image */}
-          <div className="w-full flex justify-end p-4"> {/* Aligned to top right */}
-            <img
-              src={'login-right-top-image.png'}
-              className="h-16 w-auto object-contain" 
-              alt="Top Right Illustration"
-            />
-          </div>
-
+        <div style={{backgroundColor:'#EAEAEA'}} className=" h-full hidden md:flex flex-col items-center justify-center "> {/* Changed to flex-col and justify-between for image placement */}
+        
           {/* Main Image */}
-          <div className="flex-grow flex items-center justify-center p-4"> {/* Takes remaining space */}
+          <div className="w-full h-full "> {/* Takes remaining space */}
             <img
-              src={'/login-image.png'}
-              className="w-full h-auto object-contain"
+              // src={'/login-image.png'}
+              src={'/login-image.webp'}
+              className="w-full h-full object-cover"
               alt="IoT HVAC Control"
             />
           </div>
