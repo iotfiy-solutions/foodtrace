@@ -14,8 +14,6 @@ export default function DeviceSkeleton() {
 
         
           <Skeleton variant="text" width={80} height={34} sx={{ borderRadius: "5px" }} />
-        
-
         </div>
 
         {/* Middle */}

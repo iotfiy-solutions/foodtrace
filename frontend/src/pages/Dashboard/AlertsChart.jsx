@@ -19,7 +19,8 @@ import {
   Tooltip,
   CartesianGrid,
 } from "recharts";
-import { CustomTooltip } from "./CustomToolTip";
+// import { CustomTooltip } from "./CustomTooltip";
+import { CustomTooltip } from "./CustomTooltip";
 
 
 /**
