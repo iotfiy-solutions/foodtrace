@@ -3049,7 +3049,7 @@ const removeDeviceOnly = useCallback((deviceId) => {
 
 
     const renderOTAMarkup = () => (
-   <div className={`ListPage brand-list-container ota-device-list rounded-xl shadow-sm w-full h-full border border-[#E5E7EB] flex flex-col overflow-hidden`}
+   <div className={`ListPage brand-list-container ota-device-list  rounded-xl lg:rounded-r-none lg:rounded-l-xl shadow-sm w-full h-full border border-[#E5E7EB] flex flex-col overflow-hidden`}
        style={{ backgroundColor: "#EEF3F9" }}>
 
     {/* Mobile close button */}
@@ -3059,7 +3059,7 @@ const removeDeviceOnly = useCallback((deviceId) => {
     {/* ⬇⬇⬇ paste everything from your current return body here ⬇⬇⬇ */}
 
     
-    <div className="ListPage brand-list-container ota-device-list rounded-xl shadow-sm w-full h-full border border-[#E5E7EB] flex flex-col overflow-hidden" style={{ backgroundColor: "#EEF3F9" }}>
+    <div className="ListPage brand-list-container ota-device-list  rounded-xl lg:rounded-r-none lg:rounded-l-xl shadow-sm w-full h-full border border-[#E5E7EB] flex flex-col overflow-hidden" style={{ backgroundColor: "#EEF3F9" }}>
       
        {!isDesktop && (
       <div className="flex justify-end p-2">

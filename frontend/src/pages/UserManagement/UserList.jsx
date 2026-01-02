@@ -487,7 +487,7 @@ const UserList = ({ onUserSelect, selectedUser }) => {
   const displayUsers = Managers && Managers.length > 0 ? Managers : [];
 
   const renderListMarkup = () => (
-    <div className="ListPage user-list-container  bg-white rounded-xl shadow-sm w-full h-full border border-[#E5E7EB]">
+    <div className="ListPage user-list-container  bg-white  rounded-xl lg:rounded-r-none lg:rounded-l-xl shadow-sm w-full h-full border border-[#E5E7EB]">
       {isDesktop ? (
         <h1 className="organization-list-title font-semibold text-gray-800 mb-4">User Management</h1>
       ) : (

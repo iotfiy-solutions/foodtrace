@@ -61,7 +61,7 @@ const AddOrganization = () => {
   };
 
   return (
-    <div className="AddingPage organization-add-container rounded-xl shadow-sm w-full flex flex-col justify-center bg-[#EEF3F9] border border-[#E5E7EB]">
+    <div className="AddingPage organization-add-container rounded-xl lg:rounded-l-none lg:rounded-r-xl shadow-sm w-full flex flex-col justify-center bg-[#EEF3F9] border border-[#E5E7EB]">
       <h2 className="organization-add-title font-semibold mb-1 text-center">Add Organization</h2>
       <p className="organization-add-subtitle text-gray-500 mb-6 text-center">
         Welcome back! Select method to add organization

@@ -78,7 +78,7 @@ const menuProps = {
   };
 
   return (
-    <div className="AddingPage venue-add-container rounded-xl shadow-sm w-full flex flex-col justify-center bg-[#EEF3F9] border border-[#E5E7EB]">
+    <div className="AddingPage venue-add-container  rounded-xl lg:rounded-l-none lg:rounded-r-xl shadow-sm w-full flex flex-col justify-center bg-[#EEF3F9] border border-[#E5E7EB]">
       <h2 className="venue-add-title font-semibold mb-1 text-center">Add Venues</h2>
       <p className="venue-add-subtitle text-gray-500 mb-6 text-center">Welcome back! Select method to add venue</p>
 

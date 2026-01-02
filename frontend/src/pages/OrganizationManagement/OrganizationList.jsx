@@ -101,9 +101,7 @@ const OrganizationList = ({ onOrganizationSelect, selectedOrganization }) => {
 
   // render the list markup (keeps your classes unchanged)
   const renderListMarkup = () => (
-    <div className="ListPage   bg-white rounded-xl shadow-sm w-full h-full border border-[#E5E7EB] p-5 relative">
-    
-      
+    <div className="ListPage   bg-white rounded-xl lg:rounded-r-none lg:rounded-l-xl shadow-sm w-full h-full border border-[#E5E7EB] p-5 relative">
         {
       isDesktop ? 
       <h1 className="organization-list-title font-semibold text-gray-800 mb-4">Organization Management</h1>

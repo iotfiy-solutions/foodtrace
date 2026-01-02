@@ -402,7 +402,7 @@ const VenueList = ({ onVenueSelect, selectedVenue }) => {
   };
 
   const renderListMarkup = () => (
-    <div className="ListPage venue-list-container bg-white rounded-xl shadow-sm w-full h-full border border-[#E5E7EB]">
+    <div className="ListPage venue-list-container bg-white  rounded-xl lg:rounded-r-none lg:rounded-l-xl shadow-sm w-full h-full border border-[#E5E7EB]">
       {isDesktop ? (
         <h1 className="organization-list-title font-semibold text-gray-800 mb-4">Venue Management</h1>
       ) : (

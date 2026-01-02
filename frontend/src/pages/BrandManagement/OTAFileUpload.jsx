@@ -118,7 +118,7 @@ const OTAFileUpload = ({ onUploadSuccess}) => {
   
     
   return (
-    <div className={`AddingPage  brand-add-container rounded-xl shadow-sm w-full flex flex-col justify-center bg- border border-[#E5E7EB] `}>
+    <div className={`AddingPage  brand-add-container  rounded-xl lg:rounded-l-none lg:rounded-r-xl shadow-sm w-full flex flex-col justify-center bg- border border-[#E5E7EB] `}>
       <h2 className="brand-add-title font-semibold mb-5 text-center">Update Devices</h2>
       {/* <p className="brand-add-subtitle text-gray-500 mb-6 text-center">Upload OTA binary and set version id</p> */}
 

@@ -361,7 +361,7 @@ if (freezerVal !== "" && Number.isNaN(Number(freezerVal)))
   const displayDevices = DeviceArray || [];
 
   const renderListMarkup = () => (
-    <div className="ListPage device-list-container bg-white rounded-xl shadow-sm w-full h-full border border-[#E5E7EB]">
+    <div className="ListPage device-list-container bg-white  rounded-xl lg:rounded-r-none lg:rounded-l-xl shadow-sm w-full h-full border border-[#E5E7EB]">
       {isDesktop ? (
         <h1 className="organization-list-title font-semibold text-gray-800 mb-4">Device Management</h1>
       ) : (

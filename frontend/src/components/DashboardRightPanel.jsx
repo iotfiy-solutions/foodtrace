@@ -24,7 +24,7 @@ export default function DashboardRightPanel({
 
   return (
     <div
-      className={`dashboard-right-panel shadow-sm flex flex-col h-full overflow-y-auto custom-scrollbar p-4 lg:p-6 border-l border-[#E5E7EB]/40 bg-white flex-shrink-0  ${className}`}
+      className={`dashboard-right-panel shadow-sm flex flex-col h-full overflow-y-auto custom-scrollbar p-4 lg:p-4 border-l border-[#E5E7EB]/40 bg-white flex-shrink-0  ${className}`}
     >
       {selected ? (  
         <VenueDetailsPanel

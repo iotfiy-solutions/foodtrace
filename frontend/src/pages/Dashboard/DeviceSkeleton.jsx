@@ -8,18 +8,18 @@ export default function DeviceSkeleton() {
         {/* Top section */}
         <div className="flex items-center justify-between">
             <div>
-          <Skeleton variant="text" width={96} height={14} />
-          <Skeleton variant="text" width={128} height={24} />
+          <Skeleton variant="text" width={60} height={14} />
+          <Skeleton variant="text" width={80} height={24} />
           </div>
 
         
-          <Skeleton variant="text" width={90} height={34} sx={{ borderRadius: "5px" }} />
+          <Skeleton variant="text" width={80} height={34} sx={{ borderRadius: "5px" }} />
         
 
         </div>
 
         {/* Middle */}
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-start ">
             <div className="flex items-center">  
           <Skeleton variant="circular" width={40} height={40} className="mr-3" />
           <div>
@@ -28,13 +28,13 @@ export default function DeviceSkeleton() {
           </div>
             </div>
 
-            <div className="flex items-center">  
+            {/* <div className="flex items-center">  
           <Skeleton variant="circular" width={40} height={40} className="mr-3" />
           <div>
             <Skeleton variant="text" width={65} height={14} />
             <Skeleton variant="text" width={50} height={28} />
           </div>
-            </div>
+            </div> */}
         </div>
 
         {/* Bottom */}

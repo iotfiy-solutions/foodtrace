@@ -402,8 +402,9 @@ export default function VenueDetailsPanel({
 
 
   return (
+    <>
     <div
-      className="w-full rounded-lg p-6 shadow-sm space-y-6"
+      className="w-full rounded-lg p-6 sm:p-2 shadow-sm space-y-6"
       style={{ backgroundColor: "#07518D12" }}
     >
       {closeIcon && (
@@ -425,10 +426,9 @@ export default function VenueDetailsPanel({
       )}
 
       {/* A. Venue Info Section */}
-      <div className="flex justify-between items-center pb-4 border-b border-[#E5E7EB]/40 mb-6">
+      <div className="flex justify-between items-center border-b border-[#E5E7EB]/40 ">
         <div>
           <p className="text-sm text-[#64748B] font-medium">Device ID </p>
-          {/* <h2 className="text-sm text-[#1E293B] font-bold">{displayVenueName}</h2> */}
           <h2 className="text-sm text-[#1E293B] font-bold">{deviceId || <Skeleton variant="text" width={70} />}</h2>
         </div>
         <button
@@ -442,17 +442,17 @@ export default function VenueDetailsPanel({
       </div>
 
       {/* B. Refrigerator Image */}
-      <div className="relative w-full overflow-hidden mb-4">
+      <div className="relative w-full overflow-hidden mb-2 sm:mb-1">
         <img
           src="/ambient_freezer.svg"
           alt="Refrigerator"
           className="w-full h-auto object-cover"
         />
-        <div className="flex flex-col items-center justify-center absolute top-[30%] left-[8%] ">
-          <h1 className="font-bold text-white text-lg">Freezer</h1>
-          <h1 className="font-bold text-white text-lg">{displayFreezerTemp}<span className="font-thin text-white">°C</span></h1>
+        <div className="flex flex-col items-center justify-center absolute top-[30%] left-[10%] ">
+          <h1 className="font-bold text-[#1A5B65] text-lg">Freezer</h1>
+          <h1 className="font-bold text-[#1A5B65] text-lg">{displayFreezerTemp}<span className="font-thin text-[#1A5B65]">°C</span></h1>
         </div>
-        <div className="flex flex-col items-center justify-center absolute top-[30%] right-[15%]">
+        <div className="flex flex-col items-center justify-center absolute top-[30%] right-[8%]">
           <h1 className="font-bold text-[#07518D] text-lg">Ambient</h1>
           <h1 className="font-bold text-[#07518D]  text-lg">{displayAmbientTemp}<span className="text-lg font-thin">°C</span></h1>
         </div>
@@ -497,25 +497,8 @@ export default function VenueDetailsPanel({
         </div>
       </div>
 
-
-
-      {/* D. Alerts Chart */}
-      <div className="mb-6">
-        {venues.length > 0 ? (
-          <AlertsChart venues={venues} defaultMode="battery" />
-        ) : (
-          <p className="text-sm text-gray-500 text-center">
-            No alert data available
-          </p>
-        )}
-      </div>
-      <div>
-
-
-
-
-        {apiKey ? (
-          <div className="mt-3 p-2 rounded-md bg-white border border-gray-200 text-sm text-gray-700 break-words px-2">
+   {apiKey ? (
+          <div className="mt-3 sm:mt-1  p-2 rounded-md bg-white border border-gray-200 text-sm text-gray-700 break-words px-2">
             <div className="flex items-center justify-between">
               <div>
                 <strong>API Key:</strong>
@@ -540,7 +523,20 @@ export default function VenueDetailsPanel({
           </div>
         )}
 
+         </div>
+
+      {/* D. Alerts Chart */}
+      <div className="mt-2">
+        {venues.length > 0 ? (
+          <AlertsChart venues={venues} defaultMode="battery" />
+        ) : (
+          <p className="text-sm text-gray-500 text-center">
+            No alert data available
+          </p>
+        )}
       </div>
-    </div>
+   
+      
+  </>
   );
 }

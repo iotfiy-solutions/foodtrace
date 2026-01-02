@@ -51,6 +51,7 @@
 }
 
 
+
 @media (min-width: 1024px) and (max-width: 1365px) {
   .organization-cards-grid-container {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -58,14 +59,14 @@
   }
   
   .dashboard-main-content {
-    padding: 1.5rem;
+    padding: 1rem;
   }
   
   .dashboard-right-panel {
     width: 350px !important;
     min-width: 350px !important;
     max-width: 320px !important;
-    padding: 1.5rem !important;
+    padding: 0.5rem !important;
     height: 100% !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -88,21 +89,21 @@
 }
 
 /* 15-17 inch laptops (1366px to 1599px) */
-@media (min-width: 1366px) and (max-width: 1599px) {
+@media (min-width: 1365px) and (max-width: 1599px) {
   .organization-cards-grid-container {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
   }
   
   .dashboard-main-content {
-    padding: 2rem;
+    padding: 1rem;
   }
   
   .dashboard-right-panel {
     width: 400px !important;
     min-width: 400px !important;
     max-width: 400px !important;
-    padding: 2rem !important;
+    padding: 1rem !important;
     height: 100% !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -127,7 +128,7 @@
     width: 400px !important;
     min-width: 400px !important;
     max-width: 400px !important;
-    padding: 2rem !important;
+    padding: 1rem !important;
     height: 100% !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
@@ -144,7 +145,7 @@
   }
   
   .dashboard-main-content {
-    padding: 2.5rem;
+    padding: 2rem;
   }
   
   .dashboard-right-panel {
@@ -168,7 +169,7 @@
   }
   
   .dashboard-main-content {
-    padding: 3rem;
+    padding: 2rem;
   }
   
   .dashboard-right-panel {
@@ -221,8 +222,8 @@
 
 @media (min-width: 2224px) {
   .dashboard-right-panel {
-    width: 450px !important;
-    min-width: 450px !important;
+    width: 500px !important;
+    min-width: 480px !important;
     max-width: 560px !important;
     display: flex !important;
     height: 100% !important;
@@ -251,7 +252,7 @@
   }
   
   .dashboard-main-content {
-    padding: 3.5rem;
+    padding: 3rem;
   }
   
   .dashboard-right-panel {
@@ -581,4 +582,19 @@
 
 .freezer-card-skeleton {
   background-color: #f1f5f9; /* light slate, matches dashboard */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out;
 }

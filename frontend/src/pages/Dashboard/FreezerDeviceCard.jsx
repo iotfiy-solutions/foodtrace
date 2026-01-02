@@ -332,6 +332,7 @@
 
 
 
+import { Tooltip } from "@mui/material";
 import "../../styles/global/fonts.css";
 import "../../styles/pages/Dashboard/freezer-cards-responsive.css";
 
@@ -350,6 +351,28 @@ export default function FreezerDeviceCard({
     return Number.isFinite(n) ? Math.trunc(n) : null;
   };
 
+  const hasRefrigeratorAlert = Boolean(refrigeratorAlert);
+  const hasBatteryAlert = Boolean(batteryLow);
+  
+  console.log("hasRef>", refrigeratorAlert)
+  console.log("hasBat>", batteryLow)
+  // Priority logic
+  const hasAnyAlert = hasRefrigeratorAlert || hasBatteryAlert;
+  const hasBothAlerts = hasRefrigeratorAlert && hasBatteryAlert;
+
+  console.log("hasAnyAlert>", hasRefrigeratorAlert || hasBatteryAlert)
+  console.log("hasBothAlerts>", hasBothAlerts)
+
+  const alertClass = !isSelected
+  ? hasRefrigeratorAlert
+    ? "alert-critical"   // 🔴 Refrigerator OR both
+    : hasBatteryAlert
+      ? "alert-battery"  // 🟢 Battery only
+      : ""
+  : "";
+
+
+  
   const displayFreezerTemp = toInt(freezerTemperature);
   const displayAmbientTemp = toInt(ambientTemperature);
 
@@ -358,61 +381,56 @@ export default function FreezerDeviceCard({
   };
 
   return (
-    <div
-      onClick={handleCardClick}
-      className={`freezer-card-container ${isSelected ? "selected" : ""
-        }`}
-    >
+    // <div
+    //   onClick={handleCardClick}
+    //   className={`freezer-card-container  rounded-xl   ${isSelected ? "selected" : ""
+    //     } `}
+    // >
+<div
+  onClick={handleCardClick}
+  className={`
+    freezer-card-container
+    rounded-xl
+    ${isSelected ? "selected" : ""}
+     ${alertClass}
+  `}
+>
+
+
+
       {/* Client's exact SVG card */}
       <div
-        className="relative w-full h-full"
+        className="relative w-full h-full "
       >
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 599 389"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          className="drop-shadow-md absolute inset-0 w-full h-full"
-        >
-          <g filter="url(#filter0_d_91_1411)">
-            <path
-              d="M4 50C4 22.3858 26.3858 0 54 0H545C572.614 0 595 22.3858 595 50V159.524V305.626V331C595 358.614 572.614 381 545 381H337H248.5H54C26.3858 381 4 358.614 4 331V50Z"
-              fill={isSelected ? "url(#paint0_linear_91_1411)" : "#FFFFFF"}
-            />
-            <path
-              d="M54 0.5H545C572.338 0.5 594.5 22.6619 594.5 50V331C594.5 358.338 572.338 380.5 545 380.5H54C26.6619 380.5 4.5 358.338 4.5 331V50C4.5 22.6619 26.6619 0.5 54 0.5Z"
-              stroke="#717171"
-              strokeOpacity="0.42"
-            />
-          </g>
-          <defs>
-            <filter id="filter0_d_91_1411" x="0" y="0" width="599" height="389" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-              <feFlood floodOpacity="0" result="BackgroundImageFix" />
-              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-              <feOffset dy="4" />
-              <feGaussianBlur stdDeviation="2" />
-              <feComposite in2="hardAlpha" operator="out" />
-              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_91_1411" />
-              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_91_1411" result="shape" />
-            </filter>
-            <linearGradient id="paint0_linear_91_1411" x1="68.5" y1="168.817" x2="601.988" y2="436.237" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#4F64CF" />
-              <stop offset="1" stopColor="#45D2DE" />
-            </linearGradient>
-          </defs>
-        </svg>
+       
 
         {/* Content overlay */}
-        <div className="freezer-card-content">
+        <div className="freezer-card-content ">
 
           {/* Top Section: Device ID */}
           <div className="device-id-section">
             <div className="flex flex-col items-start">
-              <span className={`device-id-label ${isSelected ? 'text-white/70' : 'text-gray-400'}`}>Device ID</span>
-              <h3 className={`device-id-value ${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>{deviceId}</h3>
+              <span className={`device-id-label ${isSelected ? 'text-white/70' : 'text-gray-400'} ${hasAnyAlert && "text-white"}`}>Device ID</span>
+              {/* <h3 className={`device-id-value responsive-value-deviceId ${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>{deviceId}</h3> */}
+              {/* <h6 className={`device-id-value responsive-value-deviceId ${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>device-0221</h6>
+               */}
+
+               
+      {/* <div className="device-id-section"> */}
+        <div className="device-id-wrapper">
+          <Tooltip title={deviceId} arrow>
+            <span
+              className={`device-id-value  ${
+                isSelected ? "text-white" : "text-[#1E293B]"
+              }`}
+            >
+              {deviceId}
+            </span>
+          </Tooltip>
+        </div>
+      {/* </div> */}
+
+
             </div>
 
             {/* Ambient Temperature Pill */}
@@ -420,10 +438,13 @@ export default function FreezerDeviceCard({
                 ? "bg-white/20 border border-white/30"
                 : "bg-white border border-gray-300"
               }`}>
-              <span className={`${isSelected ? 'text-white' : 'text-gray-600'
-                }`}>
-                Ambient {displayAmbientTemp}°C
+                <p className={` freezer-label ${isSelected ? 'text-white' : 'text-gray-600' 
+                }`} >Ambient &nbsp;
+              <span className={` font-bold `} >
+                  {displayAmbientTemp}
               </span>
+              C
+              </p>
             </div>
           </div>
 
@@ -438,60 +459,50 @@ export default function FreezerDeviceCard({
             {/* Freezer Label and Temperature - Right of Icon */}
             <div className="freezer-temp-info">
               <span className={`freezer-label ${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>
-                Freezer
+                Temperature
               </span>
 
               {/* Temperature Display - Below Freezer Text */}
-              <span className={`freezer-temp-value ${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>
+              <span className={`freezer-temp-value ${isSelected ? 'text-white' : 'text-[#1E293B]'} responsive-value`}>
                 {displayFreezerTemp}°C
               </span>
             </div>
           </div>
 
-          {/* Bottom Section: Battery Warning */}
-          {batteryLow && refrigeratorAlert ? (
-            // ✅ Show only Temperature Alert if both true
-            <div className="battery-warning">
-              <span className={`${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>
-                Temperature
-              </span>
-              <img
-                src="/red-alert-icon.webp"
-                alt="Alert"
-                className="alert-icon"
-              />
-            </div>
-          ) : (
-            <>
-              {batteryLow && (
-                <div className="battery-warning">
-                  <span className={`${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>
-                    Battery Low
-                  </span>
-                  <img
-                    src="/alert-icon.png"
-                    alt="Alert"
-                    className="alert-icon"
-                  />
-                </div>
-              )}
+       
+       
 
-              {refrigeratorAlert && (
-                <div className="battery-warning">
-                  <span className={`${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>
-                    Temperature
-                  </span>
-                  <img
-                    src="/red-alert-icon.webp"
-                    alt="Alert"
-                    className="alert-icon"
-                  />
-                </div>
-              )}
-            </>
-          )}
+
         </div>
+
+        
       </div>
+         {/* Bottom Section: Alert Status */}
+         
+{hasAnyAlert && (
+         <div className={`rounded-b-xl p-1 ${hasAnyAlert && "bg-white/50"}`}>
+  <div className="battery-warning flex gap-2 items-center">
+    <span className="text-white">Detected</span>
+
+    {hasRefrigeratorAlert && (
+      <img
+        src="/refrigerator-alert-icon.svg"
+        alt="Temperature Alert"
+        className="alert-icon"
+      />
+    )}
+
+    {hasBatteryAlert && (
+      <img
+        src="/low-battery-alert-icon.svg"
+        alt="Battery Alert"
+        className="alert-icon"
+      />
+    )}
+  </div>
+</div>
+)}
+
     </div>
   );
 }
