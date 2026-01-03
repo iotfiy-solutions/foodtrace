@@ -332,12 +332,12 @@ import { useStore } from "../../contexts/storecontexts";
 import { useEffect } from "react";
 import QRCode from "./QrCode";
 import CloseIcon from '@mui/icons-material/Close';
-import { IconButton, Skeleton } from "@mui/material";
+import { IconButton, Skeleton, useMediaQuery } from "@mui/material";
 import { fetchVenuesByOrganization } from "../../slices/VenueSlice";
 import { Download } from "lucide-react";
 import Swal from "sweetalert2";
 import { fetchAlertsByOrg } from "../../slices/alertsSlice";
-import useMediaQuery from "@mui/material";
+
 
 export default function VenueDetailsPanel({
   organizationId = null,
