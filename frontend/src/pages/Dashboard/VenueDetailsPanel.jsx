@@ -358,6 +358,7 @@ export default function VenueDetailsPanel({
   // --- select cached venues for this org
   const orgVenues = useSelector(
     (state) => (orgId ? state.Venue.venuesByOrg[orgId] || [] : [])
+    
   );
 
   // console.log("ORGID", orgId)
