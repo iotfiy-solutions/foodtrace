@@ -225,7 +225,7 @@
 
 
 .responsive-value {
-  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-size: clamp(1.3rem, 2vw, 1.3rem);
 }
 
 .responsive-value-status {
@@ -316,7 +316,7 @@
 
 @media (min-width: 1024px) and (max-width: 1366px) {
   .freezer-temp-value {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
   }
 }
