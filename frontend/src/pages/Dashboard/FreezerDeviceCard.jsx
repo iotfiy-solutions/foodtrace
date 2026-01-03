@@ -421,8 +421,9 @@ export default function FreezerDeviceCard({
           <Tooltip title={deviceId} arrow>
             <span
               className={`device-id-value  ${
-                isSelected ? "text-white" : "text-[#1E293B]"
-              }`}
+                isSelected ? "text-white" : "text-[#1E293B]" 
+              } 
+              `}
             >
               {deviceId}
             </span>
@@ -458,12 +459,12 @@ export default function FreezerDeviceCard({
 
             {/* Freezer Label and Temperature - Right of Icon */}
             <div className="freezer-temp-info">
-              <span className={`freezer-label font-semi-bold ${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>
+              <span className={`freezer-label font-semi-bold ${isSelected ? 'text-white' : 'text-[#1E293B]'} ${hasAnyAlert && "text-white"}`}>
                 Temperature
               </span>
 
               {/* Temperature Display - Below Freezer Text */}
-              <span className={`freezer-temp-value ${isSelected ? 'text-white' : 'text-[#1E293B]'} responsive-value`}>
+              <span className={`freezer-temp-value ${isSelected ? 'text-white' : 'text-[#1E293B]'} responsive-value ${hasAnyAlert && "text-white"}`}>
                 {displayFreezerTemp}°C
               </span>
             </div>
