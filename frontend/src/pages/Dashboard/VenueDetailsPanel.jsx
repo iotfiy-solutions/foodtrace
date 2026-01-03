@@ -528,7 +528,7 @@ export default function VenueDetailsPanel({
 
       {/* D. Alerts Chart */}
       {
-        !isDesktop &&  
+        isDesktop &&  
       <div className="mt-2 z-33">
         {venues.length > 0 ? (
           <AlertsChart venues={venues} defaultMode="battery" />
