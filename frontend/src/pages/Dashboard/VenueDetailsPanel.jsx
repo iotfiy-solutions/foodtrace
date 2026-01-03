@@ -450,11 +450,11 @@ export default function VenueDetailsPanel({
         />
         <div className="flex flex-col items-center justify-center absolute top-[30%] left-[10%] ">
           <h1 className="font-bold text-[#1A5B65] text-lg">Freezer</h1>
-          <h1 className="font-bold text-[#1A5B65] text-lg">{displayFreezerTemp}<span className="font-thin text-[#1A5B65]">°C</span></h1>
+          <h1 className="font-bold text-[#1A5B65] text-lg 2xl:text-2xl">{displayFreezerTemp}<span className="font-thin text-[#1A5B65]">°C</span></h1>
         </div>
         <div className="flex flex-col items-center justify-center absolute top-[30%] right-[8%]">
           <h1 className="font-bold text-[#07518D] text-lg">Ambient</h1>
-          <h1 className="font-bold text-[#07518D]  text-lg">{displayAmbientTemp}<span className="text-lg font-thin">°C</span></h1>
+          <h1 className="font-bold text-[#07518D]  text-lg 2xl:text-2xl">{displayAmbientTemp}<span className="text-lg font-thin">°C</span></h1>
         </div>
       </div>
 

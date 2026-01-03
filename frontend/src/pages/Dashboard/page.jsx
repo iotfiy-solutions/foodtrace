@@ -420,7 +420,7 @@ useEffect(() => {
   return (
     <div className="flex w-full flex-row h-full font-inter rounded-md bg-[#F5F6FA]">
       {/* Main Content Area */}
-      <div className="flex-1 min-w-0 space-y-4 overflow-y-auto custom-scrollbar dashboard-main-content bg-white shadow-sm border border-[#E5E7EB]/30 px-3 lg:px-3">
+      <div className="flex-1 min-w-0 space-y-4 overflow-y-auto custom-scrollbar dashboard-main-content bg-white shadow-sm border border-[#E5E7EB]/30 p-3 lg:py-none lg:px-3">
         
           <>
             {/* Header */}
@@ -458,26 +458,38 @@ useEffect(() => {
 
 
 {/* Freezer Device Cards area */}
-<div className="flex-1 min-h-0">
-  <div className="freezer-cards-container custom-scrollbar ">
+<div className="flex-1 min-h-[8rem]">
+  {/* <div className="freezer-cards-container custom-scrollbar  "> */}
+   <div
+  className={`freezer-cards-container custom-scrollbar
+    ${freezerDevices.length === 0 && !isInitialDevicesLoad && !isContextChanging
+      ? "no-scroll"
+      : ""}
+  `}
+>
     {(isInitialDevicesLoad || isContextChanging) ? (
- <div className="freezer-cards-grid freezer-cards-container">
+//  <div className="freezer-cards-grid freezer-cards-container">
+ <div className="freezer-cards-grid  ">
     {Array.from({ length: 4 }).map((_, index) => (
       <DeviceSkeleton key={index} />
     ))}
   </div>
     ) : freezerDevices.length === 0 ? (
       // No devices state (only shown when not loading)
-      <div className="flex flex-col items-center justify-center h-full text-[#64748B] mt-[10%]">
+      // <div className="flex flex-col items-center justify-center min-h-full h-full text-[#64748B] ">
+        <div className="freezer-empty-state text-[#64748B]">
+  <div className="flex flex-col items-center">
         <svg className="w-16 h-16 mb-4 text-[#E2E8F0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
         </svg>
         <p className="text-lg font-medium">No Freezer Devices Found</p>
         <p className="text-sm">Add some freezer devices to get started</p>
       </div>
+      </div>
     ) : (
       // Devices present
-      <div className="freezer-cards-grid freezer-cards-container">
+      // <div className="freezer-cards-grid freezer-cards-container">
+      <div className="freezer-cards-grid ">
         {freezerDevices.map((device) => (
           <FreezerDeviceCard
             key={device._id ?? device.id}

@@ -30,9 +30,12 @@ export default function AlertList({ title = "Alert", iconSrc = null, items = [] 
 
       {/* List */}
 
-      <div className="space-y-0.5 md:max-h-[12vh]   overflow-y-auto custom-scrollbar pr-2 pb-2">
+      {/* <div className="space-y-0.5 h-full md:max-h-[12vh] overflow-y-auto custom-scrollbar pr-2 pb-2">
         {items.length === 0 ? (
-          <div className="text-center py-4 text-[#64748B]">
+          <div className="text-center py-4 text-[#64748B]"> */}
+          <div className="space-y-0.5 flex-1 overflow-y-auto custom-scrollbar pr-2 pb-2">
+    {items.length === 0 ? (
+    <div className="text-center py-4 text-[#64748B]">
             🎉 No {title.toLowerCase()}! All devices are operating normally.
           </div>
         ) : (
