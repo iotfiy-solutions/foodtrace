@@ -400,12 +400,12 @@ export default function FreezerDeviceCard({
 
       {/* Client's exact SVG card */}
       <div
-        className="relative w-full h-full "
+        className=" w-full h-full "
       >
        
 
         {/* Content overlay */}
-        <div className="freezer-card-content ">
+        <div className="freezer-card-content h-full">
 
           {/* Top Section: Device ID */}
           <div className="device-id-section">
@@ -449,7 +449,7 @@ export default function FreezerDeviceCard({
           </div>
 
           {/* Middle Section: Freezer Temperature */}
-          <div className="freezer-temp-section">
+          <div className="flex items-center h-full">
             <img
               src="/freezer-icon.png"
               alt="Freezer"
@@ -458,7 +458,7 @@ export default function FreezerDeviceCard({
 
             {/* Freezer Label and Temperature - Right of Icon */}
             <div className="freezer-temp-info">
-              <span className={`freezer-label ${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>
+              <span className={`freezer-label font-semi-bold ${isSelected ? 'text-white' : 'text-[#1E293B]'}`}>
                 Temperature
               </span>
 
