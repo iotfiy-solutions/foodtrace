@@ -353,7 +353,7 @@ export default function VenueDetailsPanel({
   const dispatch = useDispatch();
   const { user } = useStore();
   const orgId = organizationId || user?.organization || null;
-  const isDesktop = useMediaQuery("768px")
+   const isDesktop = useMediaQuery("(min-width:768px)");
 
   // --- select cached venues for this org
   const orgVenues = useSelector(
@@ -528,7 +528,7 @@ export default function VenueDetailsPanel({
 
       {/* D. Alerts Chart */}
       {
-        isDesktop &&  
+        !isDesktop &&  
       <div className="mt-2 z-33">
         {venues.length > 0 ? (
           <AlertsChart venues={venues} defaultMode="battery" />
