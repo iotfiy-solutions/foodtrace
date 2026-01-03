@@ -137,7 +137,6 @@ const OrganizationList = ({ onOrganizationSelect, selectedOrganization }) => {
         </table>
 
         <div className="organization-table-scroll overflow-y-auto pr-1 h-[63vh] sm:h-[58vh]">
-        {/* <div className="organization-table-scroll overflow-y-auto pr-1 h-full  "> */}
           <table className="w-full table-auto text-left">
             <tbody>
               {isLoading && <TableSkeleton rows={4} />}
