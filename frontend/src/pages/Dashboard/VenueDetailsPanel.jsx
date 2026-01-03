@@ -337,6 +337,7 @@ import { fetchVenuesByOrganization } from "../../slices/VenueSlice";
 import { Download } from "lucide-react";
 import Swal from "sweetalert2";
 import { fetchAlertsByOrg } from "../../slices/alertsSlice";
+import useMediaQuery from "@mui/material";
 
 export default function VenueDetailsPanel({
   organizationId = null,
@@ -352,7 +353,7 @@ export default function VenueDetailsPanel({
   const dispatch = useDispatch();
   const { user } = useStore();
   const orgId = organizationId || user?.organization || null;
-
+  const isDesktop = useMediaQuery("768px")
 
   // --- select cached venues for this org
   const orgVenues = useSelector(
@@ -526,7 +527,9 @@ export default function VenueDetailsPanel({
          </div>
 
       {/* D. Alerts Chart */}
-      <div className="mt-2">
+      {
+        isDesktop &&  
+      <div className="mt-2 z-33">
         {venues.length > 0 ? (
           <AlertsChart venues={venues} defaultMode="battery" />
         ) : (
@@ -535,6 +538,7 @@ export default function VenueDetailsPanel({
           </p>
         )}
       </div>
+      }
    
       
   </>
