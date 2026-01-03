@@ -239,14 +239,13 @@
   max-width: 100%;
   /* inherit from grid / card */
   overflow: hidden;
-  
 }
 
 
 /* Mobile: smaller cards so 2 rows fit nicely */
 @media (max-width: 639px) {
   .freezer-cards-container {
-    --card-height: 10rem;
+    --card-height: 11rem;
     --grid-gap: 0.75rem;
     --container-padding: 0.75rem;
   }
