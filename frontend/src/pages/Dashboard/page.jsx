@@ -420,8 +420,10 @@ useEffect(() => {
   return (
     <div className="flex w-full flex-row h-full font-inter rounded-md bg-[#F5F6FA]">
       {/* Main Content Area */}
-      <div className="flex-1 min-w-0 space-y-4 overflow-y-auto custom-scrollbar dashboard-main-content bg-white shadow-sm border border-[#E5E7EB]/30 p-3 lg:py-none lg:px-3">
+      {/* <div className="flex-1 min-w-0 space-y-4 overflow-y-auto custom-scrollbar dashboard-main-content bg-white shadow-sm border border-[#E5E7EB]/30 p-3 lg:py-none lg:px-3"> */}
         
+        <div className="flex-1 min-w-0 space-y-4 overflow-y-auto custom-scrollbar dashboard-main-content bg-white shadow-sm border border-[#E5E7EB]/30 p-3 lg:py-none lg:px-3  ">
+      
           <>
             {/* Header */}
             <div className="flex justify-between items-center">

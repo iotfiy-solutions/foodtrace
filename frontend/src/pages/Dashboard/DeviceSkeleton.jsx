@@ -2,7 +2,7 @@ import Skeleton from "@mui/material/Skeleton";
 
 export default function DeviceSkeleton() {
   return (
-    <div className="freezer-card-container freezer-card-skeleton">
+    <div className="freezer-card-container freezer-card-skeleton ">
       <div className="freezer-card-content">
         
         {/* Top section */}
@@ -17,7 +17,7 @@ export default function DeviceSkeleton() {
         </div>
 
         {/* Middle */}
-        <div className="flex items-center justify-start ">
+        <div className="flex items-center justify-start mb-5 ">
             <div className="flex items-center">  
           <Skeleton variant="circular" width={40} height={40} className="mr-3" />
           <div>
