@@ -51,11 +51,11 @@ export default function AlertsPanel({ organizationId = null, pollInterval = null
     <div className="flex-shrink-0 mb-16 md:mb-auto">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="p-2 md:p-4 " style={{ backgroundColor: "#07518D12", borderRadius: "20px" }}>
-          <AlertList title="Refrigerator Alert" iconSrc="/Refrigerator-icon.png" 
+          <AlertList title="Refrigerator Alert" iconSrc="/freezer-alert-icon.png" 
           items={maintenanceItems} />
         </div>
         <div className="p-2 md:p-4 " style={{ backgroundColor: "#07518D12", borderRadius: "20px" }}>
-          <AlertList title="Battery Alert" items={batteryItems} />
+          <AlertList title="Battery Alert" items={batteryItems}  iconSrc="/low-battery-icon.png"  />
         </div>
       </div>
     </div>
