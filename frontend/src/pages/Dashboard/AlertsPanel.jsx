@@ -49,7 +49,9 @@ export default function AlertsPanel({ organizationId = null, pollInterval = null
 
   return (
     <div className="flex-shrink-0 mb-16 md:mb-auto">
+    {/* <div className="h-full flex flex-col"> */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* <div className="p-2 md:p-4 " style={{ backgroundColor: "#07518D12", borderRadius: "20px" }}> */}
         <div className="p-2 md:p-4 " style={{ backgroundColor: "#07518D12", borderRadius: "20px" }}>
           <AlertList title="Refrigerator Alert" iconSrc="/freezer-alert-icon.png" 
           items={maintenanceItems} />

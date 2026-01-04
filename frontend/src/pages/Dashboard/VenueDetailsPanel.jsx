@@ -403,7 +403,7 @@ export default function VenueDetailsPanel({
 
 
   return (
-    <>
+    <div className="h-full flex flex-col justify-start">
     <div
       className="w-full rounded-lg p-6 sm:p-2 shadow-sm space-y-6"
       style={{ backgroundColor: "#07518D12" }}
@@ -531,7 +531,7 @@ export default function VenueDetailsPanel({
       {/* D. Alerts Chart */}
       {
         isDesktop &&  
-      <div className="mt-2 z-33">
+      <div className="mt-[1rem] 2xl:mt-[2rem] z-33">
         {venues.length > 0 ? (
           <AlertsChart venues={venues} defaultMode="battery" />
         ) : (
@@ -539,10 +539,11 @@ export default function VenueDetailsPanel({
             No alert data available
           </p>
         )}
+        
       </div>
       }
    
       
-  </>
+  </div>
   );
 }

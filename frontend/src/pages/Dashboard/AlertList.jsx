@@ -15,7 +15,7 @@ export default function AlertList({ title = "Alert", iconSrc = null, items = [] 
 
   return (
     
-    <div className="w-full">
+    <div className="w-full ">
       {/* Header */}
       <div className="flex items-center justify-center mb-3 gap-2">
         {iconSrc && <img src={iconSrc} alt="Alert" className="w-6 h-6 rounded-full" />}
@@ -30,7 +30,10 @@ export default function AlertList({ title = "Alert", iconSrc = null, items = [] 
 
       {/* List */}
 
-      <div className="space-y-0.5 h-full h-full max-h-[100px] md:max-h-[10vh] 2xl:max-h-[15vh] 3xl:max-h-[20vh] overflow-y-auto custom-scrollbar pr-2 pb-2">
+      {/* <div className="space-y-0.5  overflow-y-auto custom-scrollbar pr-2 pb-2"> */}
+      <div className="space-y-0.5 max-h-[30vh] md:max-h-[10vh] 2xl:min-h-[16vh] 3xl:min-h-[20vh] overflow-y-auto custom-scrollbar pr-2 pb-2">
+      {/* <div className="space-y-0.5  overflow-y-auto custom-scrollbar pr-2 pb-2"> */}
+        {/* <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar pr-2 pb-2"> */}
         {/* {items.length === 0 ? (
           <div className="text-center py-4 text-[#64748B]"> */}
           {/* <div className="space-y-0.5 flex-1 overflow-y-auto custom-scrollbar pr-2 pb-2"> */}
