@@ -358,7 +358,6 @@ export default function VenueDetailsPanel({
   // --- select cached venues for this org
   const orgVenues = useSelector(
     (state) => (orgId ? state.Venue.venuesByOrg[orgId] || [] : [])
-    
   );
 
   // console.log("ORGID", orgId)
@@ -452,11 +451,11 @@ export default function VenueDetailsPanel({
         />
         <div className="flex flex-col items-center justify-center absolute top-[30%] left-[10%] ">
           <h1 className="font-bold text-[#1A5B65] text-lg">Freezer</h1>
-          <h1 className="font-bold text-[#1A5B65] text-lg 2xl:text-2xl">{displayFreezerTemp}<span className="font-thin text-[#1A5B65]">°C</span></h1>
+          <h1 className="font-bold text-[#1A5B65] text-xl sm:text-lg md:text-xl 2xl:text-2xl">{displayFreezerTemp}<span className="font-thin text-[#1A5B65]">°C</span></h1>
         </div>
         <div className="flex flex-col items-center justify-center absolute top-[30%] right-[8%]">
           <h1 className="font-bold text-[#07518D] text-lg">Ambient</h1>
-          <h1 className="font-bold text-[#07518D]  text-lg 2xl:text-2xl">{displayAmbientTemp}<span className="text-lg font-thin">°C</span></h1>
+          <h1 className="font-bold text-[#07518D]  text-xl sm:text-lg md:text-xl 2xl:text-2xl">{displayAmbientTemp}<span className="text-lg font-thin">°C</span></h1>
         </div>
       </div>
 
@@ -487,15 +486,17 @@ export default function VenueDetailsPanel({
         </div>
       </div> */}
 
-      <div className="grid grid-cols-2 gap-5 ">
-
-        <div className={`icon-number-align border border-1 rounded-sm pl-1 py-0.5 ${batteryLow ? "border-yellow-600" : "border-gray-400"}`}>
+      <div className="grid grid-cols-3 place-items-center  gap-5 ">
+        {/* <div> */}
+        {/* </div> */}
+          <img src="/yellow-alert.svg" className="w-auto h-[1.5rem]" alt="" />
+        <div className={`icon-number-align border border-1 rounded-sm p-1  ${batteryLow ? "border-yellow-600" : "border-gray-400"}`}>
           <img src="/alert-icon.png" alt="Alert" className="w-4 h-4  " />
-          <span className="text-[#1E293B] text-xs ">{batteryLow ? "Alert Detected" : "Not Detected"}</span>
+          <span className="text-[#1E293B] res-text ">{batteryLow ? "Alert Detected" : "Not Detected"}</span>
         </div>
-        <div className={`icon-number-align border border-1 rounded-sm py-0.5 ${temperatureAlert ? "border-red-500" : "border-gray-400"}`}>
-          <img src="/temperature-icon.svg" alt="Alert" className="w-6 h-6 " />
-          <span className="text-[#1E293B] text-xs ">{temperatureAlert ? "Alert Detected" : "Not Detected"}</span>
+        <div className={`icon-number-align border border-1 rounded-sm p-1  ${temperatureAlert ? "border-red-500" : "border-gray-400"}`}>
+          <img src="/temperature-icon.svg" alt="Alert" className="w-4 h-4  " />
+          <span className="text-[#1E293B] res-text ">{temperatureAlert ? "Alert Detected" : "Not Detected"}</span>
         </div>
       </div>
 
