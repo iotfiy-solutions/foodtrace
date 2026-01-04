@@ -533,7 +533,7 @@ export default function VenueDetailsPanel({
         isDesktop &&  
       <div className="mt-[1rem] 2xl:mt-[2rem] z-33">
         {venues.length > 0 ? (
-          <AlertsChart venues={venues} defaultMode="battery" />
+          <AlertsChart venues={venues} degit adfaultMode="battery" />
         ) : (
           <p className="text-sm text-gray-500 text-center">
             No alert data available
