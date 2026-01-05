@@ -64,7 +64,7 @@ app.use(cookieParser());
 // app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(
     "/assets",
-    express.static(path.join(__dirname, "../assets"))
+    express.static(path.join(__dirname, "./assets"))
 );
 
 
