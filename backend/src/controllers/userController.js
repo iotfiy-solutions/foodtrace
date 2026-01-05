@@ -9,7 +9,10 @@ const venueModel = require("../models/venueModal");
 //get all users for admin
 const getAllUsers = async (req, res) => {
     try {
-        const users = await userModel.find();
+        // const users = await userModel.find();
+        const users = await userModel
+        .find({ role: { $ne: "admin" } })
+        .select("-password -otp -resetToken -setupToken");
         if (!users) return res.status(404).json({ message: "No Users Found" });
         return res.status(200).json(users);
     } catch (error) {
