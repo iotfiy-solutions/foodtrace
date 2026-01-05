@@ -125,7 +125,7 @@
 
 
 .freezer-label {
-  font-size: clamp(0.82rem, 1vw, 2rem);
+  font-size: clamp(0.87rem, 1vw, 2rem);
   font-weight: 600;
 }
 
