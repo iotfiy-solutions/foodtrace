@@ -59,14 +59,6 @@ const sendEmail = async (to, subject, html) => {
             subject,
             html,
 
-            // Attach inline image similar to Nodemailer "cid"
-            attachments: [
-                {
-                    filename: "logo.png",
-                    path: path.join(__dirname, "../assets/logo.png"),
-                    cid: "logo"
-                }
-            ]
         });
 
         console.log("Email sent ✔");
