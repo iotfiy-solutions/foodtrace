@@ -421,7 +421,7 @@ export default function FreezerDeviceCard({
           <Tooltip title={deviceId} arrow>
             <span
               className={`device-id-value  ${
-                isSelected ? "text-white" : "text-[#1E293B]" 
+                isSelected ? "text-white" : hasAnyAlert ? "text-white/80" : "text-[#5E5E5E]" 
               } 
               `}
             >
@@ -435,22 +435,22 @@ export default function FreezerDeviceCard({
             </div>
 
             {/* Ambient Temperature Pill */}
-            <div className={`ambient-pill ${isSelected
-                ? "bg-white/20 border border-white/30"
-                : "bg-white border border-gray-300"
+            <div className={`ambient-pill bg-white/50 border ${isSelected
+                ? "border-white/30"
+                : "border-gray-300"
               }`}>
-                <p className={` freezer-label ${isSelected ? 'text-white' : 'text-gray-600' 
+                <p className={` ambient-label  ${isSelected ? 'text-white' : 'text-gray-600' 
                 }`} >Ambient &nbsp;
-              <span className={` font-bold `} >
-                  {displayAmbientTemp}
+                <span className={` font-bold `} >
+                  {displayAmbientTemp} 
               </span>
-              C
+              °C
               </p>
             </div>
           </div>
 
           {/* Middle Section: Freezer Temperature */}
-          <div className="flex items-center h-full">
+          <div className={`flex items-center h-full ${(hasAnyAlert || isSelected) &&  "white-icon"}`}>
             <img
               src="/freezer-icon.png"
               alt="Freezer"
@@ -464,8 +464,8 @@ export default function FreezerDeviceCard({
               </span>
 
               {/* Temperature Display - Below Freezer Text */}
-              <span className={`freezer-temp-value ${isSelected ? 'text-white' : 'text-[#1E293B]'} responsive-value ${hasAnyAlert && "text-white"}`}>
-                {displayFreezerTemp}°C
+              <span className={`freezer-temp-value ${isSelected ? 'text-white/80' : 'text-[#2F2E2E]/86'} responsive-value ${hasAnyAlert && "text-white/80"}`}>
+                {displayFreezerTemp}<span className="font-extralight">°C</span>
               </span>
             </div>
           </div>
@@ -480,27 +480,32 @@ export default function FreezerDeviceCard({
       </div>
          {/* Bottom Section: Alert Status */}
          
+        
 {hasAnyAlert && (
-         <div className={`rounded-b-xl p-1 ${hasAnyAlert && "bg-white/50"}`}>
-  <div className="battery-warning flex gap-2 items-center">
-    <span className="text-white ">Detected</span>
+  
+  <div className={`flex items-center justify-between rounded-b-xl p-1 px-3 ${hasAnyAlert && "bg-white/50"}`}>
+    <p className={`text-[0.9rem] font-md ${isSelected && "text-white"}`}>
+      Alert
+    </p>
+    <div className="flex items-center ">
+    <span className="text-white text-[#000000]/83 first-letter:font-bold">Detected</span>
 
     {hasRefrigeratorAlert && (
       <img
-        src="/refrigerator-alert-icon.svg"
-        alt="Temperature Alert"
-        className="alert-icon"
+      src="/refrigerator-alert-icon.svg"
+      alt="Temperature Alert"
+      className="alert-icon"
       />
     )}
 
     {hasBatteryAlert && (
       <img
-        src="/low-battery-alert-icon.svg"
-        alt="Battery Alert"
-        className="alert-icon"
+      src="/low-battery-alert-icon.svg"
+      alt="Battery Alert"
+      className="alert-icon"
       />
     )}
-  </div>
+    </div>
 </div>
 )}
 

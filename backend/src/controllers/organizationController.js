@@ -9,9 +9,9 @@ const createOrganization = async (req, res) => {
         if (!name) {
             return res.status(400).json({ message: "Organization name is required" });
         }
-
+     
         name = name.trim();
-
+        
         const existingOrg = await orgModel.findOne({ name });
         if (existingOrg) {
             return res.status(400).json({ message: "Organization already exists" });

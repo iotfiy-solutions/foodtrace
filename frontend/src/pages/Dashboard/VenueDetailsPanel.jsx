@@ -329,7 +329,7 @@
 import AlertsChart from "./AlertsChart";
 import { useDispatch, useSelector } from "react-redux";
 import { useStore } from "../../contexts/storecontexts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import QRCode from "./QrCode";
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton, Skeleton, useMediaQuery } from "@mui/material";
@@ -337,6 +337,7 @@ import { fetchVenuesByOrganization } from "../../slices/VenueSlice";
 import { Download } from "lucide-react";
 import Swal from "sweetalert2";
 import { fetchAlertsByOrg } from "../../slices/alertsSlice";
+import DownloadModal from "./DownloadModal";
 
 
 export default function VenueDetailsPanel({
@@ -368,7 +369,7 @@ export default function VenueDetailsPanel({
       ? s.alerts?.byOrg?.[orgId] ?? { venues: [], loading: false, error: null }
       : { venues: [], loading: false, error: null }
   );
-
+  
   // useEffect(() => {
   //   if (orgId) dispatch(fetchAlertsByOrg(orgId));
   // }, [orgId, dispatch]);
@@ -383,14 +384,14 @@ export default function VenueDetailsPanel({
 
   const venues = orgAlerts?.venues || [];
 
-  const handleDownload = () => {
-    Swal.fire({
-      icon: "info", // or "warning"
-      title: "Coming Soon!",
-      text: "This feature is not available yet. Stay tuned!",
-      confirmButtonText: "OK"
-    });
-  };
+  // const handleDownload = () => {
+  //   Swal.fire({
+  //     icon: "info", // or "warning"
+  //     title: "Coming Soon!",
+  //     text: "This feature is not available yet. Stay tuned!",
+  //     confirmButtonText: "OK"
+  //   });
+  // };
 
   const toInt = (v) => {
     const n = Number(v);
@@ -419,6 +420,13 @@ const formatLastUpdate = (time) => {
   };
   return date.toLocaleString(undefined, options); // uses user's locale
 };
+
+const [downloadOpen, setDownloadOpen] = useState(false);
+
+const handleDownload = () => {
+  setDownloadOpen(true);
+};
+
 
 
   return (
@@ -451,7 +459,7 @@ const formatLastUpdate = (time) => {
           <p className="text-sm text-[#64748B] font-medium">Device ID </p>
           <h2 className="text-sm text-[#1E293B] font-bold">{deviceId || <Skeleton variant="text" width={70} />}</h2>
         </div>
-        <button
+      <button
           onClick={handleDownload}
           className="inline-flex items-center gap-2 px-3 py-2 bg-[#0D5CA4] text-white rounded-full text-xs font-semibold hover:bg-[#0b4e8a]  active:scale-[.98] transition shadow-sm cursor-pointer "
           aria-label="Download"
@@ -505,7 +513,7 @@ const formatLastUpdate = (time) => {
         </div>
       </div> */}
 
-      <div className="grid sm:grid-cols-3 place-items-center  gap-5 ">
+      <div className="grid sm:grid-cols-3 place-items-center  gap-3 md:gap-5 ">
         {/* <div> */}
         {/* </div> */}
         <div className="flex items-end justify-center">
@@ -570,7 +578,13 @@ const formatLastUpdate = (time) => {
       </div>
       {/* } */}
    
-      
+       <DownloadModal
+        open={downloadOpen}
+        onClose={() => setDownloadOpen(false)}
+        measurement={deviceId}
+        bucket={import.meta.env.VITE_INFLUX_BUCKET}
+      />
+
   </div>
   );
 }

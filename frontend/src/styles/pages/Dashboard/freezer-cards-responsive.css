@@ -126,8 +126,14 @@
 
 .freezer-label {
   font-size: clamp(1.1rem, 1vw, 2rem);
-  font-weight: 600;
+  font-weight: 100;
 }
+
+.ambient-label {
+  font-size: clamp(1.1rem, 1vw, 2rem);
+  font-weight: 400;
+}
+
 
 .res-text{
     font-size: clamp(0.6rem, 0.5vw, 2rem);
@@ -188,6 +194,7 @@
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;
+  
 }
 
 
@@ -211,15 +218,7 @@
   line-height: 1;
 }
 
-/* Battery warning section */
-.battery-warning {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-size: 0.75rem;
-  font-weight: 500;
-  margin-right: 0.25rem;
-}
+
 
 .alert-icon {
   width: 1rem;
@@ -229,7 +228,7 @@
 
 
 .responsive-value {
-  font-size: clamp(1.5rem, 2vw, 1.3rem);
+  font-size: clamp(2rem, 2vw, 2rem);
 }
 
 .responsive-value-status {
@@ -249,20 +248,29 @@
 /* Mobile: smaller cards so 2 rows fit nicely */
 @media (max-width: 639px) {
   .freezer-cards-container {
-    --card-height: 11rem;
+    --card-height: 12rem;
     --grid-gap: 0.75rem;
-    --container-padding: 0.75rem;
+    --container-padding: 1rem;
   }
 
   .freezer-cards-grid {
     grid-template-columns: repeat(autofill, 1fr);
   }
+
+  .freezer-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
 }
 
 /* tablet */
 @media (min-width: 640px) and (max-width: 1023px) {
   .freezer-cards-container {
-    --card-height: 9rem;
+    --card-height: 10rem;
     --grid-gap: 0.9rem;
     --container-padding: 1rem;
   }
@@ -306,14 +314,18 @@
 
   .freezer-label {
     font-size: clamp(1rem, 0.9vw, 1rem);
-    font-weight: 500;
+    /* font-weight: 100; */
   }
 }
 
 @media (min-width: 768px){
   .freezer-label {
     font-size: clamp(0.7rem, 0.9vw, 1rem);
-    font-weight: 500;
+    /* font-weight: 100; */
+  }
+  .ambient-label {
+    font-size: clamp(0.7rem, 0.9vw, 1rem);
+    /* font-weight: 100; */
   }
 }
 
@@ -368,7 +380,7 @@
 
 @media (min-width: 320px) and (max-width: 560px) {
   .ambient-pill {
-    padding: 0.3rem ;
+    padding: 0.6rem 0.7rem;
     white-space: nowrap;
   }
 }
@@ -388,4 +400,9 @@
     font-weight: 500;
   }
 
+}
+
+
+.white-icon {
+  filter: invert(0) brightness(10);
 }
