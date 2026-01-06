@@ -10,7 +10,7 @@ const createOrganization = async (req, res) => {
             return res.status(400).json({ message: "Organization name is required" });
         }
 
-        name = name.trim().toLowerCase();
+        name = name.trim();
 
         const existingOrg = await orgModel.findOne({ name });
         if (existingOrg) {
@@ -123,7 +123,7 @@ const updateOrganization = async (req, res) => {
             return res.status(400).json({ message: "Organization name is required" });
         }
 
-        name = name.trim().toLowerCase();
+        name = name.trim();
 
         const existingOrg = await orgModel.findOne({ name });
         if (existingOrg && existingOrg._id.toString() !== id) {
