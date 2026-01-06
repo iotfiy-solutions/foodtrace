@@ -96,7 +96,7 @@ const updateUserStatus = async (req, res) => {
                 `
                 <div style="font-family: Arial, sans-serif; color: #333; background: #f5f8fa; padding: 20px; border-radius: 8px;">
                     <div style="text-align: center;">
-                        <img src="https://api.foodtrace.se/assets/logo-full.png" alt="FoodTrace Logo" style="width: 120px; margin-bottom: 20px;" />
+                        <img src="https://api.foodtrace.se/assets/logo-full.png" alt="FoodTrace Logo" style="width: 150px; margin-bottom: 20px;" />
                     </div>
                     <h2 style="color: #0055a5;">Account ${statusText}</h2>
                     ${messageBody}

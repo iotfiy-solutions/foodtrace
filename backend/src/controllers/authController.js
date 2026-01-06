@@ -160,7 +160,7 @@ const createUser = async (req, res) => {
             `
             <div style="font-family: Arial, sans-serif; color: #333; background: #f5f8fa; padding: 20px; border-radius: 8px;">
                 <div style="text-align: center;">
-                    <img src="https://api.foodtrace.se/assets/logo-full.png" alt="FoodTrace Logo" style="width: 120px; margin-bottom: 20px;" />
+                    <img src="https://api.foodtrace.se/assets/logo-full.png" alt="FoodTrace Logo" style="width: 150px; margin-bottom: 20px;" />
                 </div>
                 <h2 style="color: #0055a5;">Welcome to Food Trace!</h2>
                 <p>Hello <b>${newUser.name || newUser.email}</b>,</p>
@@ -244,7 +244,7 @@ const setPassword = async (req, res) => {
             `
   <div style="font-family: Arial, sans-serif; color: #333; padding: 20px; max-width: 600px; margin: auto; border: 1px solid #e6e6e6; border-radius: 8px; background-color: #ffffff;">
       <div style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #e6e6e6;">
-          <img src="https://api.foodtrace.se/assets/logo-full.png" alt="FoodTrace Logo" style="max-width: 120px;" />
+          <img src="https://api.foodtrace.se/assets/logo-full.png" alt="FoodTrace Logo" style="width: 150px;" />
       </div>
 
       <h2 style="color: #263238; margin-top: 30px;">Welcome to Food Trace!</h2>
