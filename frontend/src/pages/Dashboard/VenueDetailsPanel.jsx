@@ -349,6 +349,7 @@ export default function VenueDetailsPanel({
   closeIcon = false,
   deviceId = "",
   onClose = undefined,
+   lastUpdateTime=null
 }) {
   const dispatch = useDispatch();
   const { user } = useStore();
@@ -402,10 +403,28 @@ export default function VenueDetailsPanel({
   const displayFreezerTemp = toInt(freezerTemperature);
 
 
+  // helper to format backend timestamp
+const formatLastUpdate = (time) => {
+  if (!time) return null; // handle null
+
+  const date = new Date(time);
+
+  // Example: 11 Dec 2025, 19:11
+  const options = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+  return date.toLocaleString(undefined, options); // uses user's locale
+};
+
+
   return (
     <div className="h-full flex flex-col justify-start">
     <div
-      className="w-full rounded-lg p-6 sm:p-2 shadow-sm space-y-6"
+      className="w-full rounded-lg p-6 sm:p-2 shadow-sm space-y-5 sm:space-y-3 2xl:space-y-5 "
       style={{ backgroundColor: "#07518D12" }}
     >
       {closeIcon && (
@@ -486,20 +505,24 @@ export default function VenueDetailsPanel({
         </div>
       </div> */}
 
-      <div className="grid grid-cols-3 place-items-center  gap-5 ">
+      <div className="grid sm:grid-cols-3 place-items-center  gap-5 ">
         {/* <div> */}
         {/* </div> */}
+        <div className="flex items-end justify-center">
           <img src="/yellow-alert.svg" className="w-auto h-[1.5rem]" alt="" />
-        <div className={`icon-number-align border border-1 rounded-sm p-1  ${batteryLow ? "border-yellow-600" : "border-gray-400"}`}>
-          <img src="/alert-icon.png" alt="Alert" className="w-4 h-4  " />
+          <span className=" font-bold text-xs text-black block sm:hidden">Status</span>
+        </div>
+        <div className={`icon-number-align border border-1 rounded-sm p-1 w-full  ${batteryLow ? "border-yellow-600" : "border-gray-400"}`}>
+          <img src="/low-battery-icon.png" alt="Alert" className="w-4 h-4  " />
           <span className="text-[#1E293B] res-text ">{batteryLow ? "Alert Detected" : "Not Detected"}</span>
         </div>
-        <div className={`icon-number-align border border-1 rounded-sm p-1  ${temperatureAlert ? "border-red-500" : "border-gray-400"}`}>
+        <div className={`icon-number-align border border-1 rounded-sm p-1 w-full  ${temperatureAlert ? "border-red-500" : "border-gray-400"}`}>
           <img src="/temperature-icon.svg" alt="Alert" className="w-4 h-4  " />
           <span className="text-[#1E293B] res-text ">{temperatureAlert ? "Alert Detected" : "Not Detected"}</span>
         </div>
       </div>
-
+        <div>
+     
    {apiKey ? (
           <div className="mt-3 sm:mt-1  p-2 rounded-md bg-white border border-gray-200 text-sm text-gray-700 break-words px-2">
             <div className="flex items-center justify-between">
@@ -521,16 +544,20 @@ export default function VenueDetailsPanel({
                 <Skeleton variant="text" width={50} height={20} className="mb-2" />
                 <Skeleton variant="text" width={120} height={20} className="mb-2" />
               </div>
-              <Skeleton variant="rectangular" width={80} height={80} sx={{ borderRadius: "10%" }} />
+              <Skeleton variant="rectangular" width={60} height={60} sx={{ borderRadius: "10%" }} />
             </div>
           </div>
         )}
 
+        {
+          lastUpdateTime ? <div  className="text-center mt-1 p-2 md:p-1   rounded-xl bg-[#07518D]/[0.05] font-thin text-xs sm:text-md ">Last Update: {formatLastUpdate(lastUpdateTime)}</div>: ""
+        }
+         </div>
          </div>
 
       {/* D. Alerts Chart */}
-      {
-        isDesktop &&  
+      {/* {
+        isDesktop &&   */}
       <div className="mt-[1rem] 2xl:mt-[2rem] z-33">
         {venues.length > 0 ? (
           <AlertsChart venues={venues} degit adfaultMode="battery" />
@@ -541,7 +568,7 @@ export default function VenueDetailsPanel({
         )}
         
       </div>
-      }
+      {/* } */}
    
       
   </div>

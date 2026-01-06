@@ -40,7 +40,7 @@ export default function DashboardRightPanel({
           deviceId={selected?.deviceId}
           batteryLow={selected?.batteryAlert ?? false}
           temperatureAlert={selected?.refrigeratorAlert}
-          // lastUpdateTime={selected?.lastUpdateTime}
+          lastUpdateTime={selected?.lastUpdateTime}
         />
       ) : (
         <VenueDetailsPanel
@@ -56,7 +56,7 @@ export default function DashboardRightPanel({
           deviceId = {""}
           batteryLow={false}
           temperatureAlert={false}
-          // lastUpdateTime={null}
+          lastUpdateTime={null}
         />
       )}
     </div>

@@ -125,7 +125,7 @@
 
 
 .freezer-label {
-  font-size: clamp(0.87rem, 1vw, 2rem);
+  font-size: clamp(1.1rem, 1vw, 2rem);
   font-weight: 600;
 }
 
@@ -145,7 +145,7 @@
 .device-id-value {
   /* font-size: 0.2rem; */
   /* font-weight: semi-bold; */
-  font-size: clamp(0.9rem, 1vw, 2rem);
+  font-size: clamp(1.1rem, 1vw, 2rem);
   font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
@@ -192,8 +192,8 @@
 
 
 .freezer-icon {
-  width: 2rem;
-  height: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
   margin-right: 0.75rem;
   flex-shrink: 0;
 }
@@ -298,22 +298,30 @@
   }
 }
 
-@media (min-width: 400px) and (max-width: 767px) {
+@media (min-width: 580px) and (max-width: 767px) {
   .device-id-value {
-    font-size: clamp(0.93rem, 1vw, 1.5rem);
+    font-size: clamp(1rem, 1vw, 1.5rem);
     font-weight: 700;
   }
 
   .freezer-label {
-    font-size: clamp(0.7rem, 0.6vw, 1rem);
+    font-size: clamp(1rem, 0.9vw, 1rem);
     font-weight: 500;
   }
 }
 
+@media (min-width: 768px){
+  .freezer-label {
+    font-size: clamp(0.7rem, 0.9vw, 1rem);
+    font-weight: 500;
+  }
+}
+
+
 /* ===== 14-INCH LAPTOPS (1024px to 1365px) ===== */
 @media (min-width: 1024px) and (max-width: 1365px) {
   .device-id-value {
-    font-size: clamp(0.7rem, 1vw, 1.5rem);
+    font-size: clamp(0.7rem, 1.5vw, 1.5rem);
     font-weight: 700;
   }
 }

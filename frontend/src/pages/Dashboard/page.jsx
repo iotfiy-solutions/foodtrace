@@ -240,42 +240,12 @@ useEffect(() => {
     return {
       ...oldDevice,
 
-
-      // batteryLow={device?.batteryAlert ?? device?.batteryLow ?? false}
-      // refrigeratorAlert={device?.refrigeratorAlert ?? false}
-          
       espAmbient :
         newDevice.espAmbient ?? oldDevice.espAmbient,
 
       espFreezer:
         newDevice.espFreezer ?? oldDevice.espFreezer,
-
-      //   ambientTemperature:
-      //   newDevice.espAmbient ?? oldDevice.espAmbient,
-
-      // freezerTemperature:
-      //   newDevice.espFreezer ?? oldDevice.espFreezer,
-
-
-
-      // espHumidity:
-      //   newDevice.espHumidity ?? oldDevice.espHumidity,
-
-      // espTemprature:
-      //   newDevice.espTemprature ?? oldDevice.espTemprature,
-
-      // espOdour:
-      //   newDevice.espOdour ?? oldDevice.espOdour,
-
-      // temperatureAlert:
-      //   newDevice.temperatureAlert ?? oldDevice.temperatureAlert,
-
-      // humidityAlert:
-      //   newDevice.humidityAlert ?? oldDevice.humidityAlert,
-
-      // odourAlert:
-      //   newDevice.odourAlert ?? oldDevice.odourAlert,
-
+        
       batteryAlert:
         newDevice.batteryAlert ?? oldDevice.batteryAlert,
 
@@ -387,6 +357,8 @@ useEffect(() => {
   }
 
   const onVenueChange = (id) => {
+  if (String(id) === String(selectedVenueId)) return;
+    // console.log("id>", id, "venueId>", id)
   setIsContextChanging(true);   // 🔥 ADD THIS
 
   setSelectedVenueId(id)
@@ -410,13 +382,6 @@ useEffect(() => {
     )
   }
 
-
-
-
-
-  // -------------------------
-  // main JSX (kept same layout)
-  // -------------------------
   return (
     <div className="flex w-full flex-row h-full font-inter rounded-md bg-[#F5F6FA]">
       {/* Main Content Area */}
@@ -426,7 +391,7 @@ useEffect(() => {
       
           <>
             {/* Header */}
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center ">
               {
                 !isDesktopForIcon &&  <img src="/logo-half.png" alt="IOTFIY LOGO" className="w-auto h-[40px]" />
               }
@@ -446,7 +411,7 @@ useEffect(() => {
                 </>} 
               </div>
 
-              <div className="flex items-center ">
+              <div className="flex items-center ml-5 sm:ml-auto ">
                 <VenueSelect
                   organizationId={selectedOrgId || user?.organization}
                   value={selectedVenueId}

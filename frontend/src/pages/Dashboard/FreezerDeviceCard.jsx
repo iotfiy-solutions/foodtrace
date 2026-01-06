@@ -483,7 +483,7 @@ export default function FreezerDeviceCard({
 {hasAnyAlert && (
          <div className={`rounded-b-xl p-1 ${hasAnyAlert && "bg-white/50"}`}>
   <div className="battery-warning flex gap-2 items-center">
-    <span className="text-white">Detected</span>
+    <span className="text-white ">Detected</span>
 
     {hasRefrigeratorAlert && (
       <img

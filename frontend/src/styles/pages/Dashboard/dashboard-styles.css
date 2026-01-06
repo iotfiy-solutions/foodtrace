@@ -535,6 +535,16 @@
   background: #a8a8a8;
 }
 
+
+/* Fix for icon-number alignment */
+/* .icon-number-align {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 4px;
+} */
+
+/* @media (min-width: 640px) { */
 /* Fix for icon-number alignment */
 .icon-number-align {
   display: flex;
@@ -542,6 +552,9 @@
   justify-content: center;
   gap: 4px;
 }
+
+/* } */
+
 
 .icon-number-align span {
   line-height: 1;
