@@ -33,18 +33,6 @@ const allowedOrigins = [
     "http://localhost:5173",
 ];
 
-// app.use(cors({
-//     origin: function (origin, callback) {
-//         if (!origin) return callback(null, true); // allow mobile/postman
-//         if (allowedOrigins.includes(origin)) {
-//             callback(null, true);
-//         } else {
-//             callback(new Error("Not allowed by CORS"));
-//         }
-//     },
-//     credentials: true
-// }));
-
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin) return callback(null, true); // Postman, ESP, mobile
@@ -61,7 +49,6 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(
     "/assets",
     express.static(path.join(__dirname, "./assets"))
@@ -96,19 +83,6 @@ server.on("upgrade", (req, socket, head) => {
         socket.destroy(); // reject unknown paths
     }
 });
-// server.on("upgrade", (req, socket, head) => {
-//     if (req.url === "/ws/alerts") {
-//         alertWss.handleUpgrade(req, socket, head, (ws) => {
-//             alertWss.emit("connection", ws, req);
-//         });
-//     } else if (req.url === "/ws/ota") {
-//         otaWss.handleUpgrade(req, socket, head, (ws) => {
-//             otaWss.emit("connection", ws, req);
-//         });
-//     } else {
-//         socket.destroy(); // reject unknown paths
-//     }
-// });
 
 app.get("/", (req, res) => { res.send("HELLOW FARAZ") });
 
