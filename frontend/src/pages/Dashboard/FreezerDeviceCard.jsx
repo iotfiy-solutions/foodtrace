@@ -390,7 +390,7 @@ export default function FreezerDeviceCard({
   onClick={handleCardClick}
   className={`
     freezer-card-container
-    rounded-xl
+    rounded-4xl sm:rounded-xl
     ${isSelected ? "selected" : ""}
      ${alertClass}
   `}
