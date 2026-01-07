@@ -439,7 +439,7 @@ export default function FreezerDeviceCard({
                 ? "border-white/30"
                 : "border-gray-300"
               }`}>
-                <p className={` ambient-label  ${isSelected ? 'text-white' : 'text-gray-600' 
+                <p className={` ambient-res-label sm:ambient-label  ${isSelected ? 'text-white' : 'text-gray-600' 
                 }`} >Ambient &nbsp;
                 <span className={` font-bold `} >
                   {displayAmbientTemp} 

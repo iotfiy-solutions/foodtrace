@@ -6,7 +6,9 @@
   --container-padding: 0.5rem;
 
   padding: var(--container-padding);
-  background-color: #07518D12;
+  background-color: #07518d1d;
+  
+  /* background-color: #07518d17; */
   border-radius: 20px;
 
   /* show exactly two rows, then vertical scroll */
@@ -133,7 +135,6 @@
   font-weight: 400;
 }
 
-
 .res-text{
     font-size: clamp(0.6rem, 0.5vw, 2rem);
 }
@@ -248,7 +249,7 @@
 @media (max-width: 639px) {
   .freezer-cards-container {
     --card-height: 13rem;
-    --grid-gap: 0.75rem;
+    --grid-gap: 1rem;
     --container-padding: 1rem;
       -webkit-overflow-scrolling: touch;
   }
@@ -263,6 +264,11 @@
   margin-top: 0.5rem;
   margin-right: 0.75rem;
   flex-shrink: 0;
+}
+
+.ambient-res-label {
+  font-size: clamp(0.85rem, 1vw, 2rem); 
+  font-weight: 400;
 }
 
 }
