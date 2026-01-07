@@ -483,7 +483,7 @@ export default function FreezerDeviceCard({
         
 {hasAnyAlert && (
   
-  <div className={`flex items-center justify-between rounded-b-xl p-1 px-3 ${hasAnyAlert && "bg-white/50"}`}>
+  <div className={`flex items-center justify-between rounded-b-xl p-1 px-5 md:px-3 ${hasAnyAlert && "bg-white/50"}`}>
     <p className={`text-[0.9rem] font-md ${isSelected && "text-white"}`}>
       Alert
     </p>
