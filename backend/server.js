@@ -84,7 +84,7 @@ server.on("upgrade", (req, socket, head) => {
     }
 });
 
-app.get("/", (req, res) => { res.send("HELLOW FARAZ") });
+app.get("/", (req, res) => { res.send("HELLOW FARAZ To FoodTrace") });
 
 // Start server
 server.listen(port, () => {

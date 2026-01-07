@@ -428,7 +428,7 @@ useEffect(() => {
 <div className="flex-1 min-h-[8rem]">
   {/* <div className="freezer-cards-container custom-scrollbar  "> */}
    <div
-  className={`freezer-cards-container custom-scrollbar
+  className={`freezer-cards-container custom-scrollbar hide-scrollbar
     ${freezerDevices.length === 0 && !isInitialDevicesLoad && !isContextChanging
       ? "no-scroll"
       : ""}
