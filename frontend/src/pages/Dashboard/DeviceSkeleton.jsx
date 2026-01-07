@@ -2,7 +2,7 @@ import Skeleton from "@mui/material/Skeleton";
 
 export default function DeviceSkeleton() {
   return (
-    <div className="freezer-card-container freezer-card-skeleton ">
+    <div className="freezer-card-container freezer-card-skeleton rounded-4xl sm:rounded-xl ">
       <div className="freezer-card-content">
         
         {/* Top section */}
