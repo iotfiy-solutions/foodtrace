@@ -36,7 +36,7 @@ const espAlertSocket = (server) => {
                         espFreezer: data.freezer,
                         batteryAlert: data.batteryAlert == "LOW",
                         refrigeratorAlert: data.refrigeratorAlert == "ALERT",
-                        // lastUpdateTime: moment().tz("Asia/Karachi").format()
+                        lastUpdateTime: moment().tz("Europe/Stockholm").format()
                     },
                     { new: true }
                 );
