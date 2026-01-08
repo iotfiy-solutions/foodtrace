@@ -70,6 +70,8 @@ const DeviceList = ({ onDeviceSelect, selectedDevice }) => {
   // Delete confirm dialog state
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState({ id: null, name: "" });
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [expectedDeviceId, setExpectedDeviceId] = useState("");
 
   useEffect(() => {
     dispatch(fetchAllDevices());
@@ -88,15 +90,31 @@ const DeviceList = ({ onDeviceSelect, selectedDevice }) => {
   }, [error]);
 
   // Delete flow
-  const openDeleteConfirm = (id, displayName) => {
-    setDeleteTarget({ id, name: displayName });
-    setDeleteOpen(true);
-  };
+  // const openDeleteConfirm = (id, displayName) => {
+  //   setDeleteTarget({ id, name: displayName });
+  //   setDeleteOpen(true);
+  // };
+
+  const openDeleteConfirm = (id, displayName, deviceId) => {
+  setDeleteTarget({ id, name: displayName });
+  setExpectedDeviceId(deviceId || "");
+  setDeleteConfirmText("");
+  setDeleteOpen(true);
+};
+
+
+  // const handleDeleteCancel = () => {
+  //   setDeleteOpen(false);
+  //   setDeleteTarget({ id: null, name: "" });
+  // };
 
   const handleDeleteCancel = () => {
-    setDeleteOpen(false);
-    setDeleteTarget({ id: null, name: "" });
-  };
+  setDeleteOpen(false);
+  setDeleteTarget({ id: null, name: "" });
+  setDeleteConfirmText("");
+  setExpectedDeviceId("");
+};
+
 
   const handleDeleteConfirm = async () => {
     const id = deleteTarget.id;
@@ -425,7 +443,7 @@ if (freezerVal !== "" && Number.isNaN(Number(freezerVal)))
                             <Pencil className="text-green-600" size={16} />
                           </button>
                           <button
-                            onClick={() => openDeleteConfirm(id, deviceIdDisplay)}
+                            onClick={() => openDeleteConfirm(id, deviceIdDisplay,  d.deviceId)}
                             className="rounded-full border border-red-500/50 bg-white flex items-center justify-center hover:bg-red-50 p-2 cursor-pointer"
                             disabled={working}
                           >
@@ -674,7 +692,7 @@ if (freezerVal !== "" && Number.isNaN(Number(freezerVal)))
       </Dialog>
 
       {/* Delete Dialog */}
-      <Dialog open={deleteOpen} onClose={handleDeleteCancel}>
+      {/* <Dialog open={deleteOpen} onClose={handleDeleteCancel}>
         <DialogTitle>Delete {deleteTarget.name ? `"${deleteTarget.name}"` : "device"}?</DialogTitle>
         <DialogContent dividers>This action cannot be undone.</DialogContent>
         <DialogActions>
@@ -683,7 +701,60 @@ if (freezerVal !== "" && Number.isNaN(Number(freezerVal)))
             Yes, delete
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog> */}
+
+      <Dialog open={deleteOpen} onClose={handleDeleteCancel}>
+  <DialogTitle>
+    Delete {deleteTarget.name ? `"${deleteTarget.name}"` : "device"}?
+  </DialogTitle>
+
+  <DialogContent dividers>
+    <Stack spacing={2}>
+      <p className="text-sm text-gray-600">
+        This action cannot be undone.
+      </p>
+
+      <TextField
+        label="Type Device ID to confirm"
+        placeholder={expectedDeviceId}
+        value={deleteConfirmText}
+        onChange={(e) => setDeleteConfirmText(e.target.value)}
+        fullWidth
+        size="small"
+        error={
+          deleteConfirmText.length > 0 &&
+          deleteConfirmText !== expectedDeviceId
+        }
+        helperText={
+          deleteConfirmText &&
+          deleteConfirmText !== expectedDeviceId
+            ? "Device ID does not match"
+            : `Please type "${expectedDeviceId}"`
+        }
+      />
+    </Stack>
+  </DialogContent>
+
+  <DialogActions>
+    <Button onClick={handleDeleteCancel} disabled={working}>
+      Cancel
+    </Button>
+
+    <Button
+      variant="contained"
+      color="error"
+      onClick={handleDeleteConfirm}
+      disabled={
+        working ||
+        deleteConfirmText !== expectedDeviceId
+      }
+      endIcon={working ? <CircularProgress size={18} /> : null}
+    >
+      Yes, delete
+    </Button>
+  </DialogActions>
+</Dialog>
+
     </>
   );
 };

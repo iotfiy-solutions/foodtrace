@@ -320,9 +320,9 @@ useEffect(() => {
   // simple handlers (kept minimal)
   // -------------------------
 
-   const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
+  //  const toggleDrawer = (newOpen) => () => {
+  //   setOpen(newOpen);
+  // };
 
 
   const handleFreezerDeviceSelect = (deviceId) => {
@@ -366,6 +366,11 @@ useEffect(() => {
   if (id) navigate(`${basePath}?venue=${id}`, { replace: false })
   else navigate(basePath, { replace: false })
 }
+
+const clearSelectedDevice = () => {
+  setSelectedFreezerDeviceId(null);
+  setOpen(false); // also close drawer on mobile
+};
 
   
 
@@ -497,13 +502,14 @@ useEffect(() => {
       
     />  
     ) : (
-      <Drawer open={open} onClose={toggleDrawer(false)} anchor="right">
+      <Drawer open={open} onClose={clearSelectedDevice} anchor="right">
         <DashboardRightPanel
       freezerDevices={freezerDevices}
       selectedFreezerDeviceId={selectedFreezerDeviceId}
       selectedOrgId={selectedOrgId}
       closeIcon={true}
-       onClose={toggleDrawer(false)}
+      //  onClose={toggleDrawer(false)}
+       onClose={clearSelectedDevice}
     />
       </Drawer>
     )}

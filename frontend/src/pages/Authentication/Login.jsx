@@ -18,8 +18,14 @@ const Login = () => {
   }
 
   const onSubmit = () => {
+    if (loading) return;
+
     if (!FormData.email || !FormData.password) {
-      alert("Please fill in all fields.");
+      Swal.fire({
+      icon: "warning",
+      title: "Missing Fields",
+      text: "Please fill in both email and password.",
+    });
       return;
     }
     handleLogin(FormData.email, FormData.password);
@@ -101,7 +107,14 @@ const handleLogin = async (email, password) => {
         <div className="grid md:grid-cols-2 rounded-4xl items-stretch max-w-7xl w-full  bg-white shadow-lg overflow-hidden">
         {/* Left (Form) Section */}
         <div className="p-6 w-full"> {/* No need for max-w-md or mx-auto here, grid handles width */}
-          <form className="space-y-6 sm:p-10 xl:p-20 p-0" onSubmit={(e) => e.preventDefault()}>
+          {/* <form className="space-y-6 sm:p-10 xl:p-20 p-0" onSubmit={(e) => e.preventDefault()}> */}
+            <form
+              className="space-y-6 sm:p-10 xl:p-20 p-0"
+              onSubmit={(e) => {
+                e.preventDefault(); // keep control
+                onSubmit();         // 🔥 trigger login
+              }}
+            >
             <div className="mb-8 text-center md:text-left">
               <img src={'/logo.png'} alt="IoTify Logo" className="h-10 mx-auto md:mx-0 mb-4" />
               <h3 className="text-slate-900 text-2xl font-semibold">Log in to your Account</h3>
@@ -192,14 +205,23 @@ const handleLogin = async (email, password) => {
               </div>
             </div>
             <div className="!mt-12">
-              <button
+              {/* <button
                 type="button"
                  disabled={loading}
                 className={`w-full shadow-xl py-2.5 px-4 text-[15px] font-medium tracking-wide rounded-lg text-white focus:outline-none  ${loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 cursor-pointer"}`}
                 onClick={onSubmit}
              >
                   {loading ? "Logging in..." : "Log In"}
-              </button>
+              </button> */}
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full shadow-xl py-2.5 px-4 text-[15px] font-medium tracking-wide rounded-lg text-white focus:outline-none  
+                  ${loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 cursor-pointer"}`}
+              >
+                {loading ? "Logging in..." : "Log In"}
+            </button>
+
             </div>
           </form>
         </div>
